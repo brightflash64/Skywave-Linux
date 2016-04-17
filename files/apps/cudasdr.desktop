@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=CudaSDR
+GenericName=CudaSDR
+Comment=CudaSDR - High Performance Software Defined Radio
+Exec=cudaSDR
+Icon=/usr/share/pixmaps/CudaSDR.png
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;RTLSDR;SDR;

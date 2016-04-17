@@ -1,0 +1,21 @@
+[Desktop Entry]
+Name=Files (as Root)
+Comment=Nautilus folder and file manager with root priveleges..
+Exec=sudo nautilus --new-window %U
+Icon=system-file-manager
+Terminal=false
+StartupNotify=true
+Type=Application
+OnlyShowIn=GNOME;Unity;
+Categories=GNOME;GTK;Core;Files;Nautilus;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=nautilus
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=3.0.0
+X-Ubuntu-Gettext-Domain=nautilus
+Actions=Window;
+
+[Desktop Action Window]
+Name=Open a New Window (as Root)
+Exec=sudo nautilus --new-window
+OnlyShowIn=Unity;

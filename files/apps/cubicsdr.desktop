@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=CubicSDR
+GenericName=CubicSDR
+Comment=RTL-SDR - Software Defined Radio
+Exec=/opt/CubicSDR/CubicSDR
+Icon=/opt/CubicSDR/CubicSDR.ico
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;RTLSDR;

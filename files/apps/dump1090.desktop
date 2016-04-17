@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Dump1090
+GenericName=Dump1090
+Comment=Mode S SDR (software defined radio).
+Exec=gnome-terminal -e 'sh /usr/local/sbin/dump1090/dump1090.sh'
+Icon=remmina
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;ADSB;Radio;

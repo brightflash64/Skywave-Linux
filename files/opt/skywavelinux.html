@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Skywave Linux v1.5</title>
+    <meta name="Author" content="">
+    <meta name="Description" content="Introduction Page for Skywave Linux.">
+    <meta name="GENERATOR" content="Gedit">
+    <meta name="Language" content="English">  
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8"> 
+    <link rel="stylesheet" type="text/css" href="textpage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  </head>
+<body>
+<div class="content">
+<div class="outer">
+<div class="inner">
+<div class="hugefont">
+<a href="http://skywavelinux.com" style="color: #DDDDDD">Skywave Linux v1.5</a><br>
+<h2><i>Software Defined Radio for Online Listening</i></h2>
+</div>
+
+<p>Release Date:  04/01/2016.</p>
+
+<p>Welcome to Skywave Linux version 1.5.  This is an operating system designed to
+provide access to a growing network of software defined radios all over the world.
+With global SDR access, shortwave listeners can access broadcast, utility, amateur
+radio, military, and other signals from almost anywhere in the world -
+from state-of-the art radio servers.  All you need to do is boot Skywave Linux on a
+computer with internet access. You can also run your own SDR hardware in Skywave Linux.  
+</p>
+
+<p>Why was Skywave Linux created?  The developer of this system, plagued by a lack
+of access to quality radio broadcasts due to his residence in a country practising tight
+media control and censorship, sought a means to access free and diverse radio content.  In
+addition, software defined radio offered an exciting way to experience the hobby of shortwave
+listening.  By connecting to remote radio servers on the internet, it is possible to enjoy
+bleeding edge radio operation without large antennas or setting up a station on-site.  Installing
+SDR software can be difficult for many computer users, and Skywave Linux eliminates the hassle
+of downloading, compiling, and configuring apps for the SDR servers on the internet.
+</p>
+
+<h3>Supported SDR Types</h3>
+<p>Four types of software defined radio are supported by Skywave Linux:</p>
+
+<ol>
+     <li><a href="http://openhpsdr.org/">HPSDR</a> hardware, for internet accessible
+receivers, is covered by <a href="http://napan.ca/ghpsdr3/index.php/Main_Page">QtRadio</a>.
+Several servers, operated by volunteers, are online 24 hours a day, and cover spectrum from LF
+through low VHF.  Performance is excellent from these servers, and the radio configuration options
+in QtRadio make for a "professional grade" operating experience.</li>
+     <li><a href="http://websdr.org/">WebSDR</a> servers are located all over the world
+and provide easy access to the global airwaves via web browser.  In Skywave Linux, use the
+application called <b>WebSDR Server List</b> to call up the best servers.  A modern web browser
+is all one needs to enjoy clean, stable, AM / FM / SSB reception using this cutting edge technology.
+The servers at <a href="http://websdr.ewi.utwente.nl:8901/">University of Twente (NL)</a>, 
+<a href="http://100.1.108.103:8902/">K2SDR, New Jersey (USA)</a>, and
+<a href="http://www.160m.net/">G4FPH, Stafford (UK)</a> are particularly good.</li>
+     <li><a href="http://sdr.hu/">OpenWebRX</a> servers are a new type of internet accessible
+SDR, located in a few locations around the world.  They work well and more servers are expected
+to go online in 2016.  Try the <a href="http://kiwisdr.ece.uvic.ca:8073/">Victoria, British Columbia (Canada)</a>
+site to experience OpenWebRX.</li>
+     <li><a href="http://www.ab9il.net/software-defined-radio/rtl2832-sdr.html">RTL-SDR</a>
+devices used on the local system. Just plug-and-play!
+<a href="http://cubicsdr.com/">CubicSDR</a> and <a href="http://gqrx.dk/">Gqrx</a> are the main 
+applications for receiving AM / FM / SSB modes. QtRadio (via the RTL-SDR controller script) offers
+advanced noise reduction and very high quality AM / SSB / CW reception, plus FM up to a 200 kHz
+bandwidth.
+<a href="https://github.com/mutability/dump1090">Dump1090</a>
+(Mutability version) is for monitoring aircraft ADS-B transmissions.  ADS-B mapping is
+available from <a href="http://localhost:8080/">Dump1090's built in webserver</a>.</li>
+</ol>
+
+<p>For decoding RTTY, CW, PSK, WSPR, WSJT, RDS, and other digital radio transmission modes, the
+<a href="http://www.w1hkj.com/">Fldigi</a>, <a href="http://physics.princeton.edu/pulsar/K1JT/">WSJT</a>,
+and <a href="https://github.com/windytan/redsea/blob/master/README.md">Redsea</a> applications are installed.
+These decode audio from the local or remote receivers, or in the case of Redsea, directly tunes a local SDR
+and decodes data.  Weather satellite decoding is possible with the very capable
+<a href="http://www.wxtoimg.com">WXtoImg</a> application.  <a href="http://gpredict.oz9aec.net">Gpredict</a>
+provides real-time satellite tracking data and doppler corrected tuning control for Gqrx. In some cases it may
+be necessary to use the Pavucontrol application to select the best audio source (output from the LADSPA audio
+processor plugins).
+</p>
+
+<p>An experimental application, <a href="http://github.com/n1gp/cudaSDR">cudaSDR</a> is installed, expanding the support in Skywave Linux for High Performance Software Defined Radio.  It offers automatic discovery
+of connected hardware and advanced operating features.
+</p>
+
+<p>Conventional radio broadcast streams are also supported.  There are plenty of stations preloaded
+in the <a href="https://en.wikipedia.org/wiki/Rhythmbox">Rhythmbox</a> music player.  Music,
+talk, news, free-speech, and religious stations are included.
+</p>
+
+<h3>Usage and Installation Options</h3>
+<p>Use Skywave Linux as you would use any live Linux system:<p>
+<ol>
+     <li>Burn it to a DVD and run it as a boot disc (slow).</li>
+     <li>In Windows, create a bootable USB or SD card using
+<a href="http://www.pendrivelinux.com/universal-usb-installer-easy-as-1-2-3/">
+Universal USB Installer</a> or <a href="http://www.pendrivelinux.com/yumi-multiboot-usb-creator/">YUMI</a>.</li>
+     <li>In Linux, create a bootable USB or SD card using <a href="http://www.pendrivelinux.com/using-unetbootin-to-create-a-linux-usb-from-linux/">Unetbootin</a>.</li>
+     <li>In Linux, simply install a <a href="https://www.ab9il.net/linux/grub2-iso-booting.html">bootloader and copy the iso file</a>
+to a USB or SD card.</li>
+     <li>Install it to the hard drive as the main operating system.</li> 
+</ol>
+
+<h3>Technical Notes</h3>
+<p>Skywave Linux v1.5 is built on a base of state-of-the-art <a href="http://ubuntu.com">Ubuntu 15.10</a>, 
+uses the Unity desktop environment, and draws on the capabilities of Ubuntu:  software updating, 
+graphics, system resource management, etc.  It is the additional digital signal processing,
+networking, and signal decoding applications that set Skywave Linux apart from stock Ubuntu
+Linux.  The default username is <b><i>skywave</i></b> and there is no password in the default
+system.
+</p>
+
+<p>The radio software is largely compiled from source code and can be updated by end users
+with moderate computer skills, though Skywave Linux is designed for easy use by radio
+operators with basic computer skills.  In fact, Skywave Linux was created to open the
+world of HPSDR and RTL-SDR operating to people who enjoy high performance radio but are
+not computer experts.
+</p>
+
+<p>It may sometimes be advantageous for users to use encrypted connections which provide 
+stronger privacy, security, and ability to circumvent censorship.  For that purpose, the 
+<a href="https://bitmask.net/">Bitmask</a> and <a href="https://getlantern.org/">Lantern</a> 
+VPN applications are installed.  In addition, basic PPTP and OpenVPN connections are included
+in the networking applet.
+</p> 
+
+<h3>Acknowledgements</h3>
+<p>Skywave Linux thanks the talented developers who create Ubuntu, QtRadio, Cubic SDR,
+Dump1090, Fldigi, WebSDR, and the many other components necessary for this distribution
+to exist.  Skywave Linux also thanks the end users for selecting this distribution and
+hopes it is an asset to their radio monitoring endeavors.
+</p>
+
+
+<h3>Disclaimer</h3>
+<p><i>Some parts of the world suffer from governance by regimes restricting the human right
+to freedoms of speech, including radio or electronic media access.  If you are in such a restrictive place, and subject to punishment for listening to foreign media, military communications, or other signals available through Skywave Linux, you do so at your own 
+risk.  Be careful and do not get caught!  Use a VPN to encrypt your internet activity.  Shield and disguise your RTL-SDR hardware from rats and snitches.  Skywave Linux, its developers and distributors, are not responsible for the monitoring activities of end users.  We will never discourage accessing the network of software defined radio servers; we advocate self-protective measures by anyone living under restrictive regulation.</i>
+</p>
+
+<br>
+Website: <a href="http://skywavelinux.com" target="_blank">http://skywavelinux.com</a><br>
+SourceForge: <a href="https://sourceforge.net/projects/skywavelinux/" target="_blank">http://sourceforge.net/projects/skywavelinux/</a>
+<br>
+
+<p>Skywave Linux Changelog:</p>
+
+<ul>
+<li>Version 1.5:
+     <ul>
+         <li>Added Gqrx 2.5.3</li>
+         <li>Added Gpredict 1.4</li>
+         <li>Added WXtoImg 2.11.2</li>
+         <li>Updated WebSDR Server List</li>
+         <li>Upgraded CubicSDR 0.1.26</li>
+         <li>Upgraded Firefox 45</li>
+         <li>Upgraded Fldigi 3.23.08</li>
+         <li>Upgraded Lantern 2.1.1</li>
+         <li>Upgraded WSJT-X 1.6.0</li>
+         <li>Upgraded Linux kernel 4.2.0-34-generic</li>
+     </ul></li>
+
+<li>Version 1.4:
+     <ul>
+         <li>Changed default username and hostname to "skywave"</li>
+         <li>Upgraded Firefox 43</li>
+         <li>Upgraded CubicSDR 0.1.4</li>
+         <li>Removed LibreOffice</li>
+         <li>Activated Dump1090 phase-enhancement and oversampling options</li>
+         <li>Added Java (OpenJDK) Runtime Environment 1.8.0</li>
+         <li>Added CudaSDR 0.3.2.13 with RTL_HPSDR support</li>
+     </ul></li>
+
+<li>Version 1.3:
+     <ul>
+         <li>Ubuntu 15.10 base system, kernel 4.2.0-19-generic</li>
+         <li>Upgraded Bitmask 0.9.1</li>
+         <li>Upgraded Firefox 42</li>
+         <li>Upgraded LibreOffice 5.0.2</li>
+         <li>Upgraded WSJT-X 1.6-rc1</li>
+         <li>Enabled pulseaudio daemon and networked sound</li>
+         <li>Adjusted settings in QtRadio for Softrocks and RTL-SDR hardware</li>
+         <li>Added Lantern 2.0.10</li>
+         <li>Added stations to Rhythmbox</li>
+         <li>Added servers to WebSDR Server List</li>
+     </ul></li>
+
+<li>Version 1.2:
+     <ul>
+         <li>Activated ZRAM kernel module for better performance</li>
+         <li>Adjusted settings in QtRadio</li>
+         <li>Added stations to Rhythmbox</li>
+     </ul></li>
+
+<li>Version 1.1:
+     <ul>
+         <li>FM Broadcast RDS decoding via Redsea</li>
+         <li>Added WSJT-X / WSPR-X weak signal digimodes</li>
+         <li>Added Selectable WebSDR List</li>
+         <li>Improved Softrock support in QtRadio</li>
+         <li>Dump1090 Map Configuration</li>
+     </ul></li>
+
+<li>Version 1.0:
+     <ul>
+         <li>Ubuntu 14.10 base system, kernel 3.16.0-23-generic</li>
+         <li>Firefox 33</li>
+         <li>LibreOffice 4.3</li>
+         <li>QT Radio / GHPSDR3-Alex 04/26/2015</li>
+         <li>CubicSDR 0.1.3</li>
+         <li>Fldigi</li>
+         <li>Dump1090-Mutability v1.14-25</li>
+         <li>Bitmask 0.8</li>
+     </ul></li>
+</ul>
+
+</div>
+</div>
+</div>
+</body>
+</html>

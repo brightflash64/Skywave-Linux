@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Redsea RDS Decoder
+GenericName=Redsea RDS Decoder
+Comment=Redsea FM Radio Data Decoder
+Exec=gnome-terminal -e '/usr/local/sbin/redsea-controller.sh'
+Type=Application
+Icon=remmina
+Terminal=false
+NoDisplay=false
+StartupNotify=false
+Terminal=0
+TerminalOptions=
+Categories=HamRadio;Audio;Video

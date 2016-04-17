@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# overwrite Network Manager's auto-generated resolv.conf file
+echo "nameserver 8.8.8.8
+nameserver 8.8.4.4" > /run/resolvconf/resolv.conf
+

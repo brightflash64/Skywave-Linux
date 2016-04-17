@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Skywave Linux Intro Page
+GenericName=Skywave Linux Intro Page
+Comment=Information about Skywave Linux
+Exec=firefox --new-tab file:///opt/html/skywavelinux.html
+Type=Application
+Icon=firefox
+Terminal=false
+Categories=Network;HamRadio;

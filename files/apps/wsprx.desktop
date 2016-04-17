@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=wsprx
+Comment=Amateur Radio Weak Signal Operating
+Exec=/usr/local/bin/wsprx
+Icon=/usr/share/icons/wsprx_icon.png
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Categories=AudioVideo;Audio;HamRadio;
+StartupNotify=true

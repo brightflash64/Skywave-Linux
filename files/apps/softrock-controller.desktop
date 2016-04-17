@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Softrock SDR Controller
+GenericName=Softrock SDR Controller
+Comment=Start and stop softrock radio devices.
+Exec=gnome-terminal -e '/usr/local/sbin/softrock-controller.sh'
+Type=Application
+Icon=QtRadio
+Terminal=false
+NoDisplay=false
+StartupNotify=false
+Terminal=0
+TerminalOptions=
+Categories=HamRadio;Audio;Video;Network;SDR;Software Defined Radio;HPSDR;

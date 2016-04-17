@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=WXtoimg
+GenericName=WXtoimg WX Satellite Decoder
+Comment=Decode APT Weather Satellite Signals
+Exec=xwxtoimg
+Type=Application
+Icon=wxtoimg.png
+Terminal=false
+NoDisplay=false
+StartupNotify=false
+Terminal=0
+TerminalOptions=
+Categories=HamRadio;Audio;Video;Weather;Satellite

@@ -1,0 +1,239 @@
+	"78.138.102.61:20431":
+	{
+		"password": "public",
+		"publicKey": "p16btvp45j021u8yy0x25zznyhdpq5wx0djulplxf2xp2vgxjq90.k",
+		"hostname": "network.luggs.co",
+		"contact": "im@luggs.co"
+	},
+	"188.226.183.183:43328":
+	{
+    	    "password":"public_access",
+    	    "publicKey":"1y1jmqrw4r31jlp6yqmq30067rcp0tsgsdm3cs4k8l33pyfhpwn0.k",
+	    "user":"weuxel",
+    	    "contact": "hype@smash-net.org"
+	},
+	"192.241.171.154:62718":
+	{
+	    "password":"public_access",
+	    "publicKey":"q5nhj9kg6ddmk571jb259mct2ljd10z9xvyf05y3hu66wk4qnk20.k",
+	    "user":"weuxel",
+	    "contact": "hype@smash-net.org"
+	},
+	"128.199.246.213:64022":
+	{
+	    "password":"public_access",
+	    "publicKey":"ff3yru5mxjf13c4kpw1nys4j6pz9q191cds85srmsnxnql47q5p0.k",
+	    "user":"weuxel",
+	    "contact": "hype@smash-net.org"
+	},
+"119.9.12.141:17386": {
+    // Super Mesh Peer
+    "password":"953z7qcnhtnp5sp59hdrsdns052jvq7",
+    "publicKey":"b87jnkcnq2rbt4m8kc2t1b87phz57n6wdk53tjt052j07zk0gq90.k"
+},
+"79.133.43.124:12107": {
+    // Fusl's public CJDNS peering node fvz-rec-at-vie-01/fc47:1415:1ee6:8207:eb2d:665d:f5da:c6bc in Vienna, Austria (Sponsored by dediserve (https://dediserve.com/))
+    "password": "public-3ed1226fbc333a276a29a8b6f3b5be14",
+    "publicKey": "fnwpd40h326xp3g2b7tqbxby3vt528pkzy82c0l33wtrwqmck2b0.k"
+},
+"192.99.240.129:10820": {
+    // Fusl's public CJDNS peering node fvz-rec-ca-mtr-01/fc4f:ccac:8cbc:141f:8f11:592b:7b2a:6454 in Montreal, Canada (Sponsored by Zappie Host (https://zappiehost.com/))
+    "password": "public-38bf8d559e44c7eed02e6a989f061965",
+    "publicKey": "l8cydusuq2ngk6nybdbtbcpxx19h0l1t2cvy0828cd9ffsumpv10.k"
+},
+"172.81.176.146:15399": {
+    // Fusl's public CJDNS peering node fvz-rec-ca-tor-01/fc94:8117:e00f:2bb6:a1b7:849c:99ea:edaa in Toronto, Canada (Sponsored by Luna Node (https://lunanode.com/))
+    "password": "public-e36871c2857eae433528407bfb831806",
+    "publicKey": "sjr7lm3n400cdn7jmf2289clwnx2jmz5dm22r3pnwr2937k58s00.k"
+},
+"185.97.7.7:19888": {
+    // Fusl's public CJDNS peering node fvz-rec-de-fra-01/fc94:9415:3aa1:d1aa:e456:456c:76b0:bc7 in Frankfurt, Germany (Sponsored by a very kind person)
+    "password": "public-92fe13f24efd82b24b5946aeb55289d9",
+    "publicKey": "uj18qg3bkyb3hj5yusfpcfuz56jk7c5472n1s6tcxxmx1j6zk2m0.k"
+},
+"185.90.62.45:18192": {
+    // Fusl's public CJDNS peering node fvz-rec-de-muc-01/fcfb:b3aa:5953:7c40:c4fe:e253:55a3:5e16 in Munich, Germany (Sponsored by Zappie Host (https://zappiehost.com/))
+    "password": "public-acb42fc410d96c92f4219ffd23c1c6a8",
+    "publicKey": "03ubz7nvss8134wrt5xxtpjf6kyvru72upbbh5gkdb3p07d0jlg0.k"
+},
+"95.175.99.231:3284": {
+    // Fusl's public CJDNS peering node fvz-rec-fi-ulv-01/fc7d:1a8e:b4a4:15c1:6fb8:2d41:abe1:ca17 in Ulvila, Finland (Sponsored by xx.or.at (https://xx.or.at))
+    "password": "public-630a1a78925d80d3e85e66561d4408d9",
+    "publicKey": "30mxrxl2c9l17pkrdv1hqsucklzzx9bc95hdz4bmnghdvkh5vng0.k"
+},
+"185.115.241.3:2322": {
+    // Fusl's public CJDNS peering node fvz-rec-fr-par-01/fcb4:ba55:e141:cef2:6b4a:4ea1:460:3ceb in Paris, France (Sponsored by Abc-Hosters (http://www.abc-hosters.com/))
+    "password": "public-8ffc1de453cc1045b8f4cb55be81b9d4",
+    "publicKey": "gy7xw7x5s28cwnwpnl8n6dn7d02x5z0vcd4ck05s6kqqswfzqrn0.k"
+},
+"51.254.68.187:31336": {
+    // Fusl's public CJDNS peering node fvz-rec-fr-sxb-01/fc1b:9c94:71f:3916:dc2f:cd9b:c4fb:65cb in Strasbourg, France (Sponsored by GalaxyHostPlus (https://galaxyhostplus.com/))
+    "password": "public-54ee6081700f99ae9ea96e0ac4a7ef77",
+    "publicKey": "uxhztss1zffdgyx69pxckz61thf8qhylqcvp2guful7qy7gwtdj0.k"
+},
+"185.115.125.185:7029": {
+    // Fusl's public CJDNS peering node fvz-rec-gb-brs-01/fc73:afff:4a6c:d378:cd25:6792:bcb:fcc6 in Bristol, United Kingdom (Sponsored by a very kind person)
+    "password": "public-5b6bf84b18058c2d43337dac7dff0189",
+    "publicKey": "f6nvbvbd24d6rj5kmzxjb3scygzu80g9dbr104syzy0xxtjszrk0.k"
+},
+"93.170.96.119:19507": {
+    // Fusl's public CJDNS peering node fvz-rec-gb-lon-01/fc63:de17:346a:ca72:614d:2a9c:72dc:9251 in London, United Kingdom (Sponsored by Konsole (https://konsole.co.uk/))
+    "password": "public-e9154afd795f144fad4188d51e4aa290",
+    "publicKey": "3us96st6mtncum7gqdc1byq2vvv71hz81287b6b1dkd389rjth00.k"
+},
+"185.116.236.34:29660": {
+    // Fusl's public CJDNS peering node fvz-rec-gb-lon-02/fc31:412d:76bc:6fe3:cb26:18b7:466a:46d3 in London, United Kingdom (Sponsored by Ryan (https://twitter.com/rmlhhd))
+    "password": "public-1d058a12497b89e6ee52f30f7b950a3e",
+    "publicKey": "jlt5hg90zwsgfxzjg3q2v1h8j6qg49vk4jc7n6pz7nszqphqx9v0.k"
+},
+"95.154.236.104:2682": {
+    // Fusl's public CJDNS peering node fvz-rec-gb-lon-03/fcbc:77ec:d8b3:c1f7:10bb:e0c5:3dcc:ccf9 in London, United Kingdom (Sponsored by dediserve (https://dediserve.com/))
+    "password": "public-e26d9a906b508710131133b07c76e90c",
+    "publicKey": "yqzq8lgfc4y5cspcqy3927nnwg983v4dmr60u483q1y89cd8y3f0.k"
+},
+"103.53.199.71:29708": {
+    // Fusl's public CJDNS peering node fvz-rec-hk-ztw-01/fc2e:d353:6025:45f5:91d0:a312:815f:56c2 in Tsuen Wan, Hong Kong (Sponsored by dediserve (https://dediserve.com/))
+    "password": "public-6604081036ac925d37f9ad0c0c73404f",
+    "publicKey": "dt3tx0gc8cpnjxmpkg6y099769lmwwkhbv1z96qd85jxy1u83450.k"
+},
+"217.78.6.191:11928": {
+    // Fusl's public CJDNS peering node fvz-rec-ie-du-01/fc4b:cb57:2405:5e2e:e740:bf5:6fe9:10bc in Dublin, Ireland (Sponsored by dediserve (https://dediserve.com/))
+    "password": "public-eb2ef528b40d3dcbcc265adea2bfee5b",
+    "publicKey": "0bp03kjkfpu069qdt91wcq8sxktpsg1yucgx9zrv38bx54btxmq0.k"
+},
+"185.81.165.90:30087": {
+    // Fusl's public CJDNS peering node fvz-rec-lt-vno-01/fce4:303:c6af:ca2e:451c:4d:ac1b:31bf in Vilnius, Lithuania (Time4VPS (http://www.time4vps.eu/))
+    "password": "public-8e1e3cd3ca5f52f2697044bc8acff09e",
+    "publicKey": "8kpjtl3cd6602uddt8py56q8m9b50rcf6uvr6xr3014xdsb8lpj0.k"
+},
+"93.158.205.94:13136": {
+    // Fusl's public CJDNS peering node fvz-rec-nl-ams-01/fc4a:1ace:cb33:aabf:e89b:d32b:a771:183a in Amsterdam, Netherlands (Sponsored by dediserve (https://dediserve.com/))
+    "password": "public-3698edba8904bb537b983187f831a834",
+    "publicKey": "w8k0wfstgf1z30gukcfn8p06rbdy6htg77m4p8q40udsrhq57gb0.k"
+},
+"185.115.242.202:26904": {
+    // Fusl's public CJDNS peering node fvz-rec-nl-cpi-01/fc1d:db91:ed6c:1065:86b5:4da6:38c5:b9a8 in Capelle aan den IJssel, Netherlands (Sponsored by SnapServ (https://www.snapserv.net/))
+    "password": "public-2b984cf13e992e23afc02308b77cf004",
+    "publicKey": "mcu9n2yhqn81bpxqrkzjnxyww3p7xdt0jj4vtfs7qks2hhsrb770.k"
+},
+"31.220.117.27:32176": {
+    // Fusl's public CJDNS peering node fvz-rec-nl-dro-01/fc45:5070:65da:8dbb:5651:458a:9025:ac44 in Dronten, Netherlands (Sponsored by evoBurst (http://www.evoburst.com/))
+    "password": "public-0cdabafc8619d6b8589c3109274cc53e",
+    "publicKey": "3x4s87gl76gxk2q4kvk2rbnnhksghugugdkuv7f1828s21p4n2g0.k"
+},
+"31.220.43.191:26199": {
+    // Fusl's public CJDNS peering node fvz-rec-nl-fl-01/fc80:2426:bdb4:4000:4161:30d4:5d14:2e71 in Amsterdam, Netherlands (HostHatch (https://hosthatch.com/))
+    "password": "public-d428d3a2dc6432d865c52b496dde0aad",
+    "publicKey": "49ng4g826dg97mknlrpytm9806c86lgwmnz8ghguk1c1bpugdqz0.k"
+},
+"91.247.228.155:29101": {
+    // Fusl's public CJDNS peering node fvz-rec-no-osl-01/fc09:ebc3:7aa6:6c73:db72:1bd:8e6e:c48b in Oslo, Norway (Cloud.net (https://cloud.net/))
+    "password": "public-a2c026bc7895b507e9209d1627533b1d",
+    "publicKey": "sqtybrh7lsz0ds600lsprr2wm9yz08xu0l93k1txufxntj9lkcw0.k"
+},
+"185.99.132.5:21209": {
+    // Fusl's public CJDNS peering node fvz-rec-nz-akl-01/fca6:8a42:84bd:9407:aff2:fc1b:5051:f89f in Auckland, New Zealand (Sponsored by Zappie Host (https://zappiehost.com/))
+    "password": "public-5d3707395bea740d3e7ee577d21fe603",
+    "publicKey": "ux50vpzsjtcchy65gnplx1l091wjdl53w7vtyggdgq9sft7py0b0.k"
+},
+"89.34.26.150:6651": {
+    // Fusl's public CJDNS peering node fvz-rec-ro-buh-01/fc4f:5f4b:60c1:b5a0:d453:8ae:d75c:baa6 in Bucharest, Romania (HostClean.net (http://www.hostclean.net/))
+    "password": "public-2ba0f7ec51ba1d5046060747152df59f",
+    "publicKey": "132y0qql5t77rpmx4whdbpzcq5bstun66busjwnrbtwl4p38p3y0.k"
+},
+"94.242.57.130:8962": {
+    // Fusl's public CJDNS peering node fvz-rec-ru-led-01/fc64:2b96:ac3b:239a:713a:82be:9780:a9a7 in Saint Petersburg, Russia (vStoike (http://vstoike.com/))
+    "password": "public-88a1bdf407b3f124d84998bc31648c7f",
+    "publicKey": "9bszrvhdjr8366ds8dm7flsj1lu6u4ffv82yvgcdnxc7u7tynz50.k"
+},
+"103.25.202.192:12736": {
+    // Fusl's public CJDNS peering node fvz-rec-sg-ea-01/fc6e:9c71:5c46:5c72:c768:1d74:8887:c3d in Chai Chee, Singapore (SimplerCloud (http://www.simplercloud.com/))
+    "password": "public-96ac00cefa8a66aae25cde3e2756ed48",
+    "publicKey": "qpkxcjkk9mvgflxhu6nd9jt09gl5ysz8ub06fh9jws08vtf8bmn0.k"
+},
+"45.35.66.151:9651": {
+    // Fusl's public CJDNS peering node fvz-rec-us-dal-01/fc0a:9193:2be2:af09:a273:b0f1:daea:fa8f in Dallas, United States (Sponsored by Elasticnode (https://www.elasticnode.net/))
+    "password": "public-0a1219f1daa64080b13bf974916bf9c8",
+    "publicKey": "4jmsdbu971498tr396lxtr0xcv4pgn3crbwsng54nfjmm0cz5bj0.k"
+},
+"198.96.89.143:32788": {
+    // Fusl's public CJDNS peering node fvz-rec-us-lax-01/fc2e:6eca:cdf1:cdd8:6a14:100:f772:d843 in Los Angeles, United States (Sponsored by evoBurst (http://evoburst.com/))
+    "password": "public-3a1da7e767ff9114a2a78c2e70b5877a",
+    "publicKey": "k2spcc0f38bgbvcw4rqnkrdzl7v83nxh6ps6mfdt56w0vptpslv0.k"
+},
+"192.209.63.8:31857": {
+    // Fusl's public CJDNS peering node fvz-rec-us-ler-01/fcf4:695f:3490:5bd3:d045:cc5e:c23c:a0ea in Lenoir, United States (Sponsored by Zappie Host (https://zappiehost.com/))
+    "password": "public-44f36c6b2e48a2c080256fa58bd048b4",
+    "publicKey": "qwq75ldqywq7kfg5ljxq7gg4su7kts8b7bzqbjj1j5nuc4u8zu20.k"
+},
+"173.44.61.182:1644": {
+    // Fusl's public CJDNS peering node fvz-rec-us-mia-01/fc4d:edf8:5c4c:84fc:f054:b4:911c:fb24 in Miami, United States (Sponsored by evoBurst (http://evoburst.com/))
+    "password": "public-a7553ac7e080a358e6fb4464cc86079e",
+    "publicKey": "0n3qp6cjzf5rq8d23nlvqws3u99j93vdfn1vm2pxyp7w9xk0r440.k"
+},
+"23.226.230.72:19324": {
+    // Fusl's public CJDNS peering node fvz-rec-us-sea-01/fc3d:dca5:9b2e:d4b9:16d0:78ae:5373:dd03 in Seattle, United States (Sponsored by Smiba)
+    "password": "public-5b7fb8bc1ec8de2565865e0ea34f3646",
+    "publicKey": "xmtv68szjd4l7lc47hc36dqg60q22mbv61ry3yt223ntty9j3kl0.k"
+},
+//de
+"176.9.105.201:4464": {
+"login":"public",
+"password":"ir88xwtel72fen3ch7aug603s26nu3a",
+"publicKey":"yrgb0xwfr9pz8swvnv6m9by8zw7v7uxxhl07qz318cjuvfgs1fc0.k",
+"contact":"webmaster@jazzanet.com",
+"location": "Germany"
+},
+// slava
+"92.241.12.189:22569": { 
+    "password": "6mDHySCSJYVgyJqphpgnokqKrCq045mF",
+    "publicKey": "9qz459vnkb1v36ypq84m29g2q7dn8gndg9bh0w1499urnkx9nmt0.k",
+    "hostname": "h.start-com.ru", 
+    "contact": "vvk@start-com.ru" 
+},
+// coyo
+"45.33.82.56:50492": {
+    "password": "dustgard+d6f06c921bc26e8ede35fb5a8d97692f58b6d241",
+    "publicKey": "h8dzr60ylqk7dx47mlfk6tdu0gyuk0vtpckbn1lvp2hl6c764bj0.k",
+    "ipv6": "fcf1:4069:e3c4:6e66:9460:b92b:b156:cb9f",
+    "hostname": "li1045-56.members.linode.com",
+    "location": "Dallas, TX, USA",
+    "contact": "coyo@darkdna.net"
+},
+// Node is operated by elwisp@efnet OR HypeIRC
+"212.83.157.66:10334": {       
+     "password":"Public",        
+     "publicKey":"ddhxthnv29ljx2n9618qs2udm2f8jnm85szbf5y79bh4gkfyt3y0.k",        
+     "contact":"elwisp@efnet or hypeirc",       
+     "location":"FR"
+},
+"176.31.171.15:8988": {
+     "website": "http://meshnet.pl/node/alien",
+     "phone": "+48 537-833-468",
+     "jabber_xmpp": "thenaturator@dukgo.com, nullpointer@dukgo.com",
+     "password": "meshnetpl2public000xyz",
+     "publicKey": "3p1pj08w7tqnfd9p5gwrwpd8kpjbu5nmw2twkwbfullzlwt8jkg0.k"
+},
+// Derp's Public Peer, password guaranteed until October 03, 2016
+"142.4.212.42:1441": {
+    "contact": "derp@HypeIRC,EFnet",
+    "location": "Beauharnois, Quebec, Canada",
+    "hostname": "fusion.hyperboria.ca",
+    "password":"201510034nnmj97n54nby3797xt227lr0538ty4",
+    "publicKey":"9uf222z95bxd7sgvncdtzr2skgjp7vdr472f7u74pc0zxu0pjxl0.k"
+
+},
+"93.170.104.177:17347": {
+    "password": "whishmadrenkonoyfreacShytEvRoa",
+    "publicKey": "7rsmhzfkkch1hbdqz09cl6xlqlymq0mjtd8g2r05t52877cbyqz0.k",
+    "peerName": "vovcia",
+    "location": "Netherlands",
+    "contact": "vovcia (at) gmail (dot) com"
+},
+//uptime ~40%
+"195.211.160.2:25845": {
+    "password": "1n13publicgh8accessgkrk3x11k3u1",
+    "publicKey": "uml5zsq5j7z35rq3jwlfgbfbrt7d14fx2qjvnwmux2qdzslzkw20.k",
+    "peerName":"casper_por",
+    "location":"Russia, Sevastopol"
+},

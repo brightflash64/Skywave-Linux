@@ -1,0 +1,234 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# hyperboria.sh - An init script (/etc/init.d/) for cjdns
+# Provides:          cjdroute
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Cjdns router
+# Description:       A routing engine designed for security, scalability, speed and ease of use.
+# cjdns git repo:    https://github.com/cjdelisle/cjdns/blob/a7350a4d6ec064f71eeb026dd4a83b235b299512/README.md
+### END INIT INFO
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+yellow=`tput setaf 3`
+blue=`tput setaf 4`
+purple=`tput setaf 5`
+liteblue=`tput setaf 6`
+grey=`tput setaf 7`
+grey2=`tput setaf 8`
+grey3=`tput setaf 9`
+black=`tput setaf 0`
+reset=`tput sgr0`
+
+PROG="cjdroute"
+GIT_PATH="/opt/cjdns"
+PROG_PATH="/opt/cjdns"
+CJDNS_CONFIG="/etc/cjdroute.conf"
+CJDNS_LOGFOLDER="/var/log/cjdns"
+CJDNS_LOG="/dev/null"
+CJDNS_USER="root"  #see wiki about changing user to service user.
+
+start() {
+     # Start it up with the user cjdns
+     if [ $(pgrep cjdroute | wc -l) != 0 ];
+     then
+         echo "${yellow}Cjdroute is already running. Doing nothing...${reset}"
+     else
+         echo "${green} * Starting cjdroute"
+         sudo -u $CJDNS_USER $PROG_PATH/$PROG < $CJDNS_CONFIG
+         echo "Your CJDNS IPv6 address is:${reset}"
+         echo "${blue}"
+         ifconfig tun0 | grep inet6 | awk '{print $3}'
+         echo "${reset}"
+     fi
+ }
+
+ stop() {
+
+     if [ $(pgrep cjdroute | wc -l) != 1 ];
+     then
+         echo "${yellow}cjdns isn't running.${reset}"
+     else
+         echo "${red}Killing cjdroute${reset}"
+         killall cjdroute
+     fi
+ }
+
+ flush() {
+     echo "${purple}Cleaning log file, leaving last 100 rows\n${reset}"
+     tail -100 $CJDNS_LOG > .tmp_cjdns_log && mv .tmp_cjdns_log $CJDNS_LOG
+ }
+
+ status() {
+     if [ $(pgrep cjdroute | wc -l) != 0 ];
+     then
+         echo "${green}cjdns is running"
+         echo "Your CJDNS IPv6 address is:${reset}"
+         echo "${blue}"
+         ifconfig tun0 | grep inet6 | awk '{print $3}'
+         echo "${reset}"
+     else
+         echo "${red}cjdns is not running${reset}"
+     fi
+ }
+
+
+ update() {
+     cd $GIT_PATH
+     echo "${yellow}Updating...${reset}"
+     git pull
+     ./do
+ }
+
+setup() {
+     echo "${yellow}Create cjdns installation folder if it does not exist: $GIT_PATH.${reset}"
+     mkdir -p $GIT_PATH
+     echo "${yellow}Ensuring you have the required software: cmake make git build-essential nano nodejs${reset}"
+
+     if hash yum 2>/dev/null; then
+	sudo yum -y localinstall https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+     	sudo yum -y install install nodejs git
+     	sudo yum -y install @development-tools
+     elif hash apt-get 2>/dev/null; then
+     	apt-get install -y cmake make git build-essential nodejs
+     fi
+
+     #If you dont want nano, you can delete "nano" above but you must then change "nano" below to your prefered text editor.
+     echo "${yellow}Cloning from github...${reset}"
+     cd $GIT_PATH/../
+     git clone https://github.com/cjdelisle/cjdns.git
+     echo "${green}doing it, compiling software...${reset}"
+     cd $GIT_PATH
+     ./do
+     
+     if [ -f /usr/bin/cjdroute ];
+     then
+     	echo "${blue}Symlink of cjdroute command exists at /usr/bin/cjdroute${reset}"
+     else
+     	sudo ln -s /opt/cjdns/cjdroute /usr/bin/
+     fi
+     wget https://gist.githubusercontent.com/satindergrewal/1b8310e9a4a68183385c/raw/a2542f5a90eb7be300d1cb8fe97b8122d8bcdfaa/peer_info_cjdns
+
+     if [ -f $CJDNS_CONFIG ]; #check if config file already exist.
+     then
+	echo
+        echo "${yellow}Config file ($CJDNS_CONFIG) already exists.${reset}" 
+        echo "${grey}To generate a new config file run:${reset}" 
+	echo "${blue}~:$ /opt/cjdns/cjdroute --genconf > $CJDNS_CONFIG${reset}"
+	echo
+     else
+	echo
+        echo "${yellow}There is not config file ($CJDNS_CONFIG) detected. ${reset}"
+	echo "${green}**Generating a config file ($CJDNS_CONFIG)...${reset}"
+	echo
+        #cjdroute --genconf > $CJDNS_CONFIG
+        cjdroute --genconf > $CJDNS_CONFIG && sed -i "74i // SuperMesh Peer" $CJDNS_CONFIG && sed -i '/SuperMesh Peer/r /opt/cjdns/peer_info_cjdns' $CJDNS_CONFIG
+        start
+        
+        ln -s /opt/cjdns/contrib/systemd/cjdns.service /etc/systemd/system/
+        echo "${green}cjdns installed as a service.${reset}"
+        systemctl enable cjdns
+        echo "${green}Setup cjdns service to start automatically with system start/reboot.${reset}"
+        
+        echo
+        echo "${yellow}One temporary peer has been added. Access to this peer is not guranteed for long term."
+        echo "So, Please add some peers (optional)..."
+        echo "  Get public peers info from: https://pad.meshwith.me/p/public"
+        echo ""
+        echo "  Or visit IRC: irc://irc.EFNet.org/#cjdns"
+        echo "  and use the command in #cjdns channel:"
+        echo "${reset}"
+        echo "${grey2}  ? public${reset}"
+        echo "${yellow}"
+        echo "  It will show you some website links, where you'll find cjdns public peer info."
+        echo "  You can find more info on how to configure these peers to your cjdroute.conf file here:${reset} ${blue} https://docs.meshwith.me/faq/peering.html${reset}"
+        #$EDITOR $CJDNS_CONFIG
+        
+     fi
+
+     echo "Making a log dir ($CJDNS_LOGFOLDER)"
+     mkdir -p $CJDNS_LOGFOLDER
+     echo
+     echo "You haz compiled \o/! add peers to $CJDNS_CONFIG"
+     echo
+ }
+
+delete() {
+	echo 
+	echo "[**WARNING**]"
+	read -p "Are you SURE your want to DELETE cjdns from this system? NOTE: this will not delete the config file($CJDNS_CONFIG): (Y|y|N|n). " choice
+	case "$choice" in 
+	  y|Y ) 
+		echo "**Stopping cjdns..."
+		stop #stop cjdns
+		sleep 3
+		echo
+		echo "**Deleting cjdns files from your system ($GIT_PATH, $CJDNS_LOGFOLDER)  "
+		sleep 2
+		rm -rf $GIT_PATH $CJDNS_LOGFOLDER
+		rm /usr/bin/cjdroute
+		echo
+		echo "Your configuration file ($CJDNS_CONFIG) still exists."
+		echo "You many want to keep this for later use.  You can also"
+		echo "delete the file or soft link if you created one i.e., /etc/init.d/hyperboria"
+		echo
+		;;
+	  n|N ) 
+		echo "**Exiting uninstall of cjdns. You have done nothing :)..."
+		;;
+	  * ) echo "**Invalid response. You have done nothing :)..."
+		;;
+	esac
+
+}
+
+ ## Check to see if we are running as root first.
+ if [ "$(id -u)" != "0" ]; then
+     echo "This script must be run as root" 1>&2
+     exit 1
+ fi
+
+ case $1 in
+     start)
+         start
+         exit 0
+     ;;
+     stop)
+         stop
+         exit 0
+     ;;
+     reload|restart|force-reload)
+         stop
+         sleep 1
+         start
+         exit 0
+     ;;
+     status)
+         status
+         exit 0
+     ;;
+     flush)
+         flush
+         exit 0
+     ;;
+     update|upgrade)
+         update
+         stop
+         sleep 2
+         start
+         exit 0
+     ;;
+     install|setup)
+         setup
+     ;;
+     delete)
+         delete
+     ;;
+     **)
+         echo "Usage: $0 (start|stop|restart|status|flush|update|install|delete)" 1>&2
+         exit 1
+     ;;
+ esac

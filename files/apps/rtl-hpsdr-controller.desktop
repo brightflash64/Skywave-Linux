@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=RTL-HPSDR Controller
+GenericName=RTL-HPSDR Controller
+Comment=Start and stop RTL-SDR devices in QtRadio.
+Exec=gnome-terminal -e '/usr/local/sbin/rtl-hpsdr-controller.sh'
+Type=Application
+Icon=QtRadio
+Terminal=false
+NoDisplay=false
+StartupNotify=false
+Terminal=0
+TerminalOptions=
+Categories=HamRadio;Audio;Video;Network;SDR;Software Defined Radio;HPSDR;
