@@ -24,7 +24,7 @@ Four types of software defined radio are supported by Skywave Linux:
 
 For decoding RTTY, CW, PSK, WSJT, WSPR, RDS, and other digital radio transmission modes, the Fldigi the WSJT applications are installed. Simply start the applicatio and tune in a signal on the waterfall to decode. Weather satellite decoding is possible with the very capable WXtoImg application. Gpredict provides real-time satellite tracking data and doppler corrected tuning control for Gqrx. In some cases it may be necessary to use the Pulseaudio Preferences or Volume Control applications to configure the audio (output from the LADSPA audio processor plugins, networked sound, etc).
 
-Two experimental applications, cudaSDR and OpenHPSDRJ are installed, expanding the support in Skywave Linux for High Performance Software Defined Radio. Both offer automatic discovery of connected hardware and advanced operating features.
+Two experimental applications, cudaSDR, is installed, expanding the support in Skywave Linux for High Performance Software Defined Radio. It offers automatic discovery of connected hardware and advanced operating features.
 
 Conventional radio broadcast streams are also supported. There are plenty of stations preloaded in the Rhythmbox music player. Music, talk, news, free-speech, and religious stations are included.
 
@@ -62,37 +62,37 @@ Some parts of the world suffer from governance by regimes restricting the human 
 
 Version 1.5:
 
->Added Gqrx 2.5.3
->Added Gpredict 1.4
->Added WXtoImg 2.11.2
->Updated WebSDR Server List
->Upgraded CubicSDR 0.1.26
->Upgraded Firefox 45
->Upgraded Fldigi 3.23.08
->Upgraded Lantern 2.1.1
->Upgraded WSJT-X 1.6.0
->Upgraded Linux kernel 4.2.0-34-generic
+>Added Gqrx 2.5.3  
+>Added Gpredict 1.4  
+>Added WXtoImg 2.11.2  
+>Updated WebSDR Server List  
+>Upgraded CubicSDR 0.1.26  
+>Upgraded Firefox 45  
+>Upgraded Fldigi 3.23.08  
+>Upgraded Lantern 2.1.1  
+>Upgraded WSJT-X 1.6.0  
+>Upgraded Linux kernel 4.2.0-34-generic  
 
 Version 1.4:
->Changed default username and hostname to "skywave"
->Upgraded Firefox 43
->Upgraded CubicSDR 0.1.4
->Removed LibreOffice
->Activated Dump1090 phase-enhancement and oversampling options
->Added Java (OpenJDK) Runtime Environment 1.8.0
->Added CudaSDR 0.3.2.13 with RTL_HPSDR support
+>Changed default username and hostname to "skywave"  
+>Upgraded Firefox 43  
+>Upgraded CubicSDR 0.1.4  
+>Removed LibreOffice  
+>Activated Dump1090 phase-enhancement and oversampling options  
+>Added Java (OpenJDK) Runtime Environment 1.8.0  
+>Added CudaSDR 0.3.2.13 with RTL_HPSDR support  
 
 Version 1.3:
->Ubuntu 15.10 base system, kernel 4.2.0-19-generic
->Upgraded Bitmask 0.9.1
->Upgraded Firefox 42
+>Ubuntu 15.10 base system, kernel 4.2.0-19-generic  
+>Upgraded Bitmask 0.9.1  
+>Upgraded Firefox 42  
 >Upgraded LibreOffice 5.0.2
->Upgraded WSJT-X 1.6-rc1
->Enabled pulseaudio daemon and networked sound
->Adjusted settings in QtRadio for Softrocks and RTL-SDR hardware
->Added Lantern 2.0.10
->Added stations to Rhythmbox
->Added servers to WebSDR Server List
+>Upgraded WSJT-X 1.6-rc1  
+>Enabled pulseaudio daemon and networked sound  
+>Adjusted settings in QtRadio for Softrocks and RTL-SDR hardware  
+>Added Lantern 2.0.10  
+>Added stations to Rhythmbox  
+>Added servers to WebSDR Server List  
 
 Version 1.2:
 >Activated ZRAM kernel module for better performance  
