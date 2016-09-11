@@ -1,0 +1,18 @@
+To use Cjdns networking, follow these steps:
+
+1)  Paste ipv4 peers into ~/cjdns/cjdns_peers_ipv4 or
+paste ipv6 peers into ~/cjdns/cjdns_peers_ipv6.
+
+2)  Use the Cjdns controller to write either ipv4
+or ipv6 peers into the file /etc/cjdroute.conf.
+
+3)  Use the Cjdns controller to start Cjdns.
+
+4)  Return to conventional networking, if desired,
+by selecting "Stop CJDNS" in the controller.
+
+MOFO Linux comes with a large amount of peer data
+scraped from multiple web sites.  You only need a few
+for successful networking, but it is possible to use
+many to assure connectivity in a contested networking
+environment.

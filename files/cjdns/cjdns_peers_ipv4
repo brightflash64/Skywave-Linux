@@ -1,35 +1,111 @@
-	"78.138.102.61:20431":
-	{
-		"password": "public",
-		"publicKey": "p16btvp45j021u8yy0x25zznyhdpq5wx0djulplxf2xp2vgxjq90.k",
-		"hostname": "network.luggs.co",
-		"contact": "im@luggs.co"
-	},
-	"188.226.183.183:43328":
-	{
-    	    "password":"public_access",
-    	    "publicKey":"1y1jmqrw4r31jlp6yqmq30067rcp0tsgsdm3cs4k8l33pyfhpwn0.k",
-	    "user":"weuxel",
-    	    "contact": "hype@smash-net.org"
-	},
-	"192.241.171.154:62718":
-	{
-	    "password":"public_access",
-	    "publicKey":"q5nhj9kg6ddmk571jb259mct2ljd10z9xvyf05y3hu66wk4qnk20.k",
-	    "user":"weuxel",
-	    "contact": "hype@smash-net.org"
-	},
-	"128.199.246.213:64022":
-	{
-	    "password":"public_access",
-	    "publicKey":"ff3yru5mxjf13c4kpw1nys4j6pz9q191cds85srmsnxnql47q5p0.k",
-	    "user":"weuxel",
-	    "contact": "hype@smash-net.org"
-	},
-"119.9.12.141:17386": {
-    // Super Mesh Peer
-    "password":"953z7qcnhtnp5sp59hdrsdns052jvq7",
-    "publicKey":"b87jnkcnq2rbt4m8kc2t1b87phz57n6wdk53tjt052j07zk0gq90.k"
+// Hetzner (Germany)
+"78.46.87.243:25192": {
+ "login": "public",
+ "password":"public",
+ "publicKey":"vb5wrlmnd3dq0z9nblbq2txftz71hufffl310yz503hu077lmtj0.k",
+ "peerName":"bbhub.ga",
+ "contact": "xmpp: a@bbhub.ga"
+},
+// Amsterdam, NL
+"146.185.162.175:46398" : {
+        "login": "public",
+        "password" : "meshwithme",
+        "publicKey" : "g2xyf69w70q4q2nzfyhs5ybdhpgx0uz56zxqlj27g2ytnklqvxv0.k",
+
+      "contact" : "info@florianb.space IRC: florianb",
+},
+//de
+"176.9.105.201:4446": {
+"login":"public",
+"password":"ir88xwtel72fen3ch7aug603s26nu3a",
+"publicKey":"yrgb0xwfr9pz8swvnv6m9by8zw7v7uxxhl07qz318cjuvfgs1fc0.k",
+"contact":"webmaster@jazzanet.com",
+"location": "Germany"
+}
+// slava
+"92.241.12.189:22569": { 
+    "password": "6mDHySCSJYVgyJqphpgnokqKrCq045mF",
+    "publicKey": "9qz459vnkb1v36ypq84m29g2q7dn8gndg9bh0w1499urnkx9nmt0.k",
+    "hostname": "h.start-com.ru", 
+    "contact": "vvk@start-com.ru" 
+},
+// coyo
+"45.33.82.56:50492":
+{
+    "password": "dustgard+d6f06c921bc26e8ede35fb5a8d97692f58b6d241",
+    "publicKey": "h8dzr60ylqk7dx47mlfk6tdu0gyuk0vtpckbn1lvp2hl6c764bj0.k",
+    "ipv6": "fcf1:4069:e3c4:6e66:9460:b92b:b156:cb9f",
+    "hostname": "li1045-56.members.linode.com",
+    "location": "Dallas, TX, USA",
+    "contact": "coyo@darkdna.net"
+},
+// Skainet - New Delhi
+"49.50.68.107:10202":{
+    "password": "tvm8wg95pz8mf2rhqrmru9613065p1b",
+    "login": "pubpeer"
+    "publicKey": "gfvqkx072mzy2dwv05yld4dw0nhk6f74xk2td8l0jxpmqtm5l0z0.k",
+    "ipv6": "fc70:1579:8c22:ef98:6197:4af3:1dd6:5eb1",
+    "peername": "Skainet-IN",
+    "location": "New Delhi, India",
+    "contact": "skainet@hyperboria.name"
+},
+// Skainet - London
+"151.236.19.211:36630":{
+    "password": "2b9lvmw18ftkdm3x9nf8dyhcb55ml1f",
+    "login": "pubpeer"
+    "publicKey": "4y33qncty3lz0dtjyktgck659bt34qcmy8qlpxydyvkml4z5sq80.k",
+    "ipv6": "fc70:6067:ad7c:a8b7:1825:e098:7d94:9892",
+    "peername": "Skainet-LDN",
+    "location": "London, UK",
+    "contact": "skainet@hyperboria.name"
+},
+// Node is operated by elwisp@efnet OR HypeIRC
+"212.83.157.66:10334":{       
+     "password":"Public",        
+     "publicKey":"ddhxthnv29ljx2n9618qs2udm2f8jnm85szbf5y79bh4gkfyt3y0.k",        
+     "contact":"elwisp@efnet or hypeirc",       
+     "location":"FR"
+},
+"176.31.171.15:8988":{
+      "website": "http://meshnet.pl/node/alien",
+      "phone": "+48 537-833-468",
+      "password": "meshnetpl2public000xyz",
+      "publicKey": "3p1pj08w7tqnfd9p5gwrwpd8kpjbu5nmw2twkwbfullzlwt8jkg0.k"
+      "jabber_xmpp": "thenaturator@dukgo.com, nullpointer@dukgo.com"
+},
+// Derp's Public Peer, password guaranteed until October 03, 2016
+"142.4.212.42:1441":
+{
+    "contact": "derp@HypeIRC,EFnet",
+    "location": "Beauharnois, Quebec, Canada",
+    "hostname": "fusion.hyperboria.ca",
+    "password":"201510034nnmj97n54nby3797xt227lr0538ty4",
+    "publicKey":"9uf222z95bxd7sgvncdtzr2skgjp7vdr472f7u74pc0zxu0pjxl0.k"
+},
+"93.170.104.177:17347": {
+        "password": "whishmadrenkonoyfreacShytEvRoa",
+        "publicKey": "7rsmhzfkkch1hbdqz09cl6xlqlymq0mjtd8g2r05t52877cbyqz0.k",
+        "peerName": "vovcia",
+        "location": "Netherlands",
+        "contact": "vovcia (at) gmail (dot) com"
+},
+"51.254.25.16:1132":{
+    "contact":"me@magik6k.net",
+    "password":"thah9aePha1Vusha6ovhpublic",
+    "peerName":"Magik6k-sbg1",
+    "publicKey":"kw0vfw3tmb6u6p21z5jmmymdlumwknlg3x8muk5mcw66tdpqlw30.k" 
+},
+"188.226.183.183:43328":{
+    "password":"public_access",
+    "publicKey":"1y1jmqrw4r31jlp6yqmq30067rcp0tsgsdm3cs4k8l33pyfhpwn0.k",
+    "user":"weuxel",
+    "contact": "hype@smash-net.org"
+},
+"192.241.171.154:62718":{
+    "password":"public_access",
+    "publicKey":"q5nhj9kg6ddmk571jb259mct2ljd10z9xvyf05y3hu66wk4qnk20.k",
+    "user":"weuxel",
+    "contact": "hype@smash-net.org"
 },
 "79.133.43.124:12107": {
     // Fusl's public CJDNS peering node fvz-rec-at-vie-01/fc47:1415:1ee6:8207:eb2d:665d:f5da:c6bc in Vienna, Austria (Sponsored by dediserve (https://dediserve.com/))
@@ -176,64 +252,5 @@
     "password": "public-5b7fb8bc1ec8de2565865e0ea34f3646",
     "publicKey": "xmtv68szjd4l7lc47hc36dqg60q22mbv61ry3yt223ntty9j3kl0.k"
 },
-//de
-"176.9.105.201:4464": {
-"login":"public",
-"password":"ir88xwtel72fen3ch7aug603s26nu3a",
-"publicKey":"yrgb0xwfr9pz8swvnv6m9by8zw7v7uxxhl07qz318cjuvfgs1fc0.k",
-"contact":"webmaster@jazzanet.com",
-"location": "Germany"
-},
-// slava
-"92.241.12.189:22569": { 
-    "password": "6mDHySCSJYVgyJqphpgnokqKrCq045mF",
-    "publicKey": "9qz459vnkb1v36ypq84m29g2q7dn8gndg9bh0w1499urnkx9nmt0.k",
-    "hostname": "h.start-com.ru", 
-    "contact": "vvk@start-com.ru" 
-},
-// coyo
-"45.33.82.56:50492": {
-    "password": "dustgard+d6f06c921bc26e8ede35fb5a8d97692f58b6d241",
-    "publicKey": "h8dzr60ylqk7dx47mlfk6tdu0gyuk0vtpckbn1lvp2hl6c764bj0.k",
-    "ipv6": "fcf1:4069:e3c4:6e66:9460:b92b:b156:cb9f",
-    "hostname": "li1045-56.members.linode.com",
-    "location": "Dallas, TX, USA",
-    "contact": "coyo@darkdna.net"
-},
-// Node is operated by elwisp@efnet OR HypeIRC
-"212.83.157.66:10334": {       
-     "password":"Public",        
-     "publicKey":"ddhxthnv29ljx2n9618qs2udm2f8jnm85szbf5y79bh4gkfyt3y0.k",        
-     "contact":"elwisp@efnet or hypeirc",       
-     "location":"FR"
-},
-"176.31.171.15:8988": {
-     "website": "http://meshnet.pl/node/alien",
-     "phone": "+48 537-833-468",
-     "jabber_xmpp": "thenaturator@dukgo.com, nullpointer@dukgo.com",
-     "password": "meshnetpl2public000xyz",
-     "publicKey": "3p1pj08w7tqnfd9p5gwrwpd8kpjbu5nmw2twkwbfullzlwt8jkg0.k"
-},
-// Derp's Public Peer, password guaranteed until October 03, 2016
-"142.4.212.42:1441": {
-    "contact": "derp@HypeIRC,EFnet",
-    "location": "Beauharnois, Quebec, Canada",
-    "hostname": "fusion.hyperboria.ca",
-    "password":"201510034nnmj97n54nby3797xt227lr0538ty4",
-    "publicKey":"9uf222z95bxd7sgvncdtzr2skgjp7vdr472f7u74pc0zxu0pjxl0.k"
 
-},
-"93.170.104.177:17347": {
-    "password": "whishmadrenkonoyfreacShytEvRoa",
-    "publicKey": "7rsmhzfkkch1hbdqz09cl6xlqlymq0mjtd8g2r05t52877cbyqz0.k",
-    "peerName": "vovcia",
-    "location": "Netherlands",
-    "contact": "vovcia (at) gmail (dot) com"
-},
-//uptime ~40%
-"195.211.160.2:25845": {
-    "password": "1n13publicgh8accessgkrk3x11k3u1",
-    "publicKey": "uml5zsq5j7z35rq3jwlfgbfbrt7d14fx2qjvnwmux2qdzslzkw20.k",
-    "peerName":"casper_por",
-    "location":"Russia, Sevastopol"
-},
+  
