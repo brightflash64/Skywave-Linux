@@ -23,7 +23,7 @@ killall dspserver
 echo ""
 echo "Enable networked audio with the PulseAudio Preferences Application."
 echo ""
-read -p "Create keys for this session?" choice1
+read -p "Create keys for this session? (Y,n) " choice1
 case "$choice1" in 
   y|Y ) 
   openssl genrsa -out pkey 2048
@@ -40,7 +40,7 @@ case "$choice1" in
 ;;
 esac
 
-read -p "Is your Softrock using an Si570 Tuner? (y/n)?" choice2
+read -p "Is your Softrock using an Si570 Tuner? (y/n)? " choice2
 case "$choice2" in 
   y|Y ) yes;;
   n|N ) no;;
