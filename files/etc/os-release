@@ -1,9 +1,9 @@
 NAME="Skywave Linux"
-VERSION="1.5"
+VERSION="2.0"
 ID=ubuntu
 ID_LIKE=debian
-PRETTY_NAME="Skywave Linux 1.5"
-VERSION_ID="1.5"
+PRETTY_NAME="Skywave Linux 2.0"
+VERSION_ID="2.0"
 HOME_URL="http://skywavelinux.com/"
 SUPPORT_URL="http://help.ubuntu.com/"
 BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
