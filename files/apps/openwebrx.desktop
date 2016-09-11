@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=OpenWebRX-RTLSDR
+GenericName=OpenWebRX-RTLSDR
+Comment=Web Based SDR Interface
+Exec=/usr/local/sbin/openwebrx/openwebrx.sh
+Icon=openwebrx-avatar
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Files (as Root)
 Comment=Nautilus folder and file manager with root priveleges..
-Exec=sudo nautilus --new-window %U
+Exec=gksu nautilus --new-window %U
 Icon=system-file-manager
 Terminal=false
 StartupNotify=true

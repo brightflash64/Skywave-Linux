@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=OpenWebRX - SDRPlay
+GenericName=OpenWebRX - SDRPlay
+Comment=Web Based SDRPlay Interface
+Exec=/usr/local/sbin/openwebrx/openwebrx-sdrplay.sh
+Icon=openwebrx-avatar
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;

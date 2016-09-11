@@ -6,4 +6,4 @@ Exec=cudaSDR
 Icon=/usr/share/pixmaps/CudaSDR.png
 Terminal=false
 Type=Application
-Categories=Network;HamRadio;RTLSDR;SDR;
+Categories=Network;HamRadio;RTLSDR;Software Defined Radio;HPSDR;SDR;
