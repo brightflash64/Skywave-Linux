@@ -75,31 +75,24 @@ peerstats(){
 gnome-terminal -e 'bash -c "/opt/cjdns/tools/peerStats; read line"'
 }
 
-ans=$(zenity  --list --title="CJDNS/HYPERBORIA CONTROLLER" --height 330 --width 350 \
---text "Please pick from this list." --radiolist --column "Pick" \
-TRUE "Stop CJDNS" FALSE "Start CJDNS" FALSE "Restart CJDNS"  FALSE "Check CJDNS status" \
-FALSE "Check CJDNS peerstats" FALSE "Update CJDNS" \
-FALSE "Set IPv4 Peers (json formatted)" FALSE "Set IPv6 Peers  (json formatted)" \
-FALSE "Use config file (~/cjdns/cjdroute.conf)" FALSE "Create new config file (/etc/cjdroute.conf)" \
---column "Action");
+ans=$(zenity  --list --title="CJDNS/HYPERBORIA CONTROLLER" --height 440 --width 350 \
+--text "Follow these steps to connect.
+Relaunch this app for each step:
+     1) Create the config file.
+     2) Set Peers
+     3) Restart Cjdns
+     4) Check Peerstats
+     5) Check Status" --radiolist --column "Select" --column "Task" \
+FALSE "Create new config file (/etc/cjdroute.conf)" \
+FALSE "Set IPv4 Peers (json formatted)" \
+FALSE "Set IPv6 Peers  (json formatted)" \
+FALSE "Restart CJDNS" \
+FALSE "Check CJDNS peerstats" FALSE "Check CJDNS status" \
+FALSE "Update CJDNS" FALSE "Use config file (~/cjdns/cjdroute.conf)" \
+FALSE "Start CJDNS" TRUE "Stop CJDNS" );
 
-	if [  "$ans" = "Stop CJDNS" ]; then
-		stopcjdns
-
-	elif [  "$ans" = "Start CJDNS" ]; then
-		startcjdns
-
-	elif [  "$ans" = "Restart CJDNS" ]; then
-		restartcjdns
-
-	elif [  "$ans" = "Check CJDNS status" ]; then
-		status
-
-	elif [  "$ans" = "Check CJDNS peerstats" ]; then
-		peerstats
-
-	elif [  "$ans" = "Update CJDNS" ]; then
-		updatecjdns
+	if [  "$ans" = "Create new config file (/etc/cjdroute.conf)" ]; then
+		createconf
 
 	elif [  "$ans" = "Set IPv4 Peers (json formatted)" ]; then
 		ipv4peers
@@ -107,10 +100,25 @@ FALSE "Use config file (~/cjdns/cjdroute.conf)" FALSE "Create new config file (/
 	elif [  "$ans" = "Set IPv6 Peers  (json formatted)" ]; then
 		ipv6peers
 
+	elif [  "$ans" = "Restart CJDNS" ]; then
+		restartcjdns
+
+	elif [  "$ans" = "Check CJDNS peerstats" ]; then
+		peerstats
+
+	elif [  "$ans" = "Check CJDNS status" ]; then
+		status
+
+	elif [  "$ans" = "Update CJDNS" ]; then
+		updatecjdns
+
 	elif [  "$ans" = "Use config file (~/cjdns/cjdroute.conf)" ]; then
 		copyfile
 
-	elif [  "$ans" = "Create new config file (/etc/cjdroute.conf)" ]; then
-		createconf
+	elif [  "$ans" = "Start CJDNS" ]; then
+		startcjdns
+
+	elif [  "$ans" = "Stop CJDNS" ]; then
+		stopcjdns
 
 	fi
