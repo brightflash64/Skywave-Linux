@@ -1,63 +1,44 @@
 #! /bin/sh
-
-#System setup script for Skywave Linux v2.0
+#
+#System setup script for Skywave Linux v2.2
 #Use on Ubuntu / Mint / Debian
-#Run this script as root!
-
-#blacklist the rtl28xxu kernel driver
-echo "blacklist dvb_usb_rtl28xxu
-blacklist e4000
-blacklist rtl2832" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
-
-#set performance configuration in sysctl.conf
-echo "
-############
-net.core.somaxconn = 1000
-net.core.netdev_max_backlog = 5000
-net.core.rmem_max = 16777216
-net.core.wmem_max = 16777216
-net.ipv4.tcp_wmem = 4096 12582912 16777216
-net.ipv4.tcp_rmem = 4096 12582912 16777216
-net.ipv4.tcp_max_syn_backlog = 8096
-net.ipv4.tcp_slow_start_after_idle = 0
-net.ipv4.tcp_tw_reuse = 1
-net.ipv4.ip_local_port_range = 10240 65535
-# Set swappiness
-vm.swappiness=10
-# Improve cache management
-vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+#Run this script as root within the chroot!
 
 #increase Ubuntu privacy, recuce resource load, remove conflicting packages
-apt-get purge --auto-remove speech-dispatcher modemmanager cheese libreoffice* rhythmbox* shotwell unity-lens-shopping webbrowser-app
+apt purge --auto-remove speech-dispatcher modemmanager cheese libreoffice* rhythmbox* shotwell unity-lens-shopping webbrowser-app deja-dup indicator-messages plymouth-theme-ubuntu-text snap-confine* snapd* ubuntu-core-launcher* whoopsie zeitgeist zeitgeist-core
 systemctl disable snapd.refresh.service
-apt-get -y autoremove
-apt-get clean
+apt -y autoremove
+apt clean
 
 echo "\nSetting up repositories..."
 #firefox, gqrx, fldigi, kodi
-add-apt-repository ppa:mozillateam/firefox-next
-add-apt-repository ppa:bladerf/bladerf-snapshots
-apt-add-repository ppa:dansmith/chirp-snapshots
-add-apt-repository ppa:ettusresearch/uhd
-add-apt-repository ppa:gpredict-team/daily
-add-apt-repository ppa:gqrx/gqrx-sdr
-add-apt-repository ppa:kamalmostafa/fldigi
-add-apt-repository ppa:team-xbmc/unstable
-add-apt-repository ppa:myriadrf/drivers
-add-apt-repository ppa:myriadrf/gnuradio
+add-apt-repository -y ppa:mozillateam/firefox-next
+add-apt-repository -y ppa:bladerf/bladerf-snapshots
+add-apt-repository -y ppa:dansmith/chirp-snapshots
+add-apt-repository -y ppa:ettusresearch/uhd
+add-apt-repository -y ppa:gpredict-team/daily
+add-apt-repository -y ppa:gqrx/gqrx-sdr
+add-apt-repository -y ppa:kamalmostafa/fldigi
+add-apt-repository -y ppa:noobslab/icons
+add-apt-repository -y ppa:noobslab/themes
+add-apt-repository -y ppa:team-xbmc/unstable
+add-apt-repository -y ppa:myriadrf/drivers
+add-apt-repository -y ppa:myriadrf/gnuradio
 
 #Ubuntu
-add-apt-repository multiverse
-add-apt-repository universe
-add-apt-repository xenial-backports
-add-apt-repository xenial-proposed
-add-apt-repository xenial-updates
+add-apt-repository -y multiverse
+add-apt-repository -y universe
+add-apt-repository -y xenial-backports
+add-apt-repository -y xenial-proposed
+add-apt-repository -y xenial-updates
+add-apt-repository -y ppa:ubuntu-x-swat/updates
+add-apt-repository -y ppa:xorg-edgers/ppa
 
 # get everything that we want from the repositories
 echo "\nGetting packages from the repositories..."
-apt-get update
-apt-get upgrade
-apt-get -y install $(grep -vE "^\s*#" newsoftware  | tr "\n" " ")
+apt update
+apt -y upgrade
+apt -y install $(grep -vE "^\s*#" newsoftware  | tr "\n" " ")
 echo "\nFinished installing software from the repositories."
 echo "\nStarting installation from source code.  Please stand by..."
 
@@ -74,25 +55,33 @@ ln -s /usr/bin/nodejs /usr/bin/node
 wget "https://s3.amazonaws.com/lantern/lantern-installer-beta-64-bit.deb"
 dpkg -i lantern-installer-beta-64-bit.deb
 
-#get qtradio
-echo "\n...QtRadio..."
-cd ~
-git clone https://github.com/alexlee188/ghpsdr3-alex
-cd ghpsdr3-alex
-sh cleanup.sh
-git checkout master
-autoreconf -i
-./configure
-make -j4 all
-make install
+#replace the .desktop file
+echo '[Desktop Entry]
+Type=Application
+Name=Lantern
+Exec=sh -c "lantern -addr 127.0.0.1:8118"
+Icon=lantern
+Comment=Censorship circumvention application for unblocked web browsing.
+Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applications/lantern.desktop
 
 #install rtl-sdr drivers
 echo "\n...rtl-sdr firmware..."
 cd ~
-git clone https://git.osmocom.org/rtl-sdr
+#git clone https://git.osmocom.org/rtl-sdr
+#alternate mutability version
+git clone https://github.com/mutability/rtl-sdr
 mkdir rtl-sdr/build
 cd rtl-sdr/build
 cmake ../ -DINSTALL_UDEV_RULES=ON
+make
+make install
+ldconfig
+
+#get r820tweak
+echo "\n\n...getting r820tweak..."
+cd ~
+git clone https://github.com/gat3way/r820tweak
+cd r820tweak
 make
 make install
 ldconfig
@@ -130,26 +119,6 @@ make
 make install
 ldconfig
 
-#get the sdrplay linux api installer manually
-#from http://sdrplay.com/linuxdl.php
-#then enable and run it:
-echo "\n...SDRplay MiricsAPI..."
-cd ~
-chmod 755 SDRplay_RSP_MiricsAPI-Linux-1.95.3.run
-./SDRplay_RSP_MiricsAPI-Linux-1.95.3.run
-
-#get sdrplay support from osmocom
-echo "\n...gr-osmosdr..."
-cd ~
-#use the hb9fxq fork with better sdrplay support
-git clone https://github.com/krippendorf/gr-osmosdr-fork-sdrplay
-mkdir gr-osmosdr-fork-sdrplay/build
-cd gr-osmosdr-fork-sdrplay/build
-cmake -DENABLE_NONFREE=TRUE ../
-make
-make install
-ldconfig
-
 #install hackrf support
 echo "\n...hackrf..."
 cd ~
@@ -160,6 +129,171 @@ cmake ../ -DINSTALL_UDEV_RULES=ON
 make
 make install
 ldconfig
+
+#get liquid-dsp
+echo "\n...liquid-dsp..."
+cd ~
+git clone https://github.com/jgaeddert/liquid-dsp
+cd liquid-dsp
+./bootstrap.sh
+./configure
+make
+make install
+ldconfig
+
+#get SoapySDR
+echo "\n...SoapySDR..."
+cd ~
+git clone https://github.com/pothosware/SoapySDR
+mkdir SoapySDR/build
+cd SoapySDR/build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make
+make install
+ldconfig
+
+#get the SoapyAirspy support module
+echo "\n\n...soapy airspy"
+cd ~
+git clone https://github.com/pothosware/SoapyAirspy
+mkdir SoapyAirspy/build
+cd SoapyAirspy/build
+cmake ..
+make
+make install
+ldconfig
+
+#get the SoapyOsmo support module
+echo "\n\n...soapy osmo"
+cd ~
+git clone https://github.com/pothosware/SoapyOsmo
+mkdir SoapyOsmo/build
+cd SoapyOsmo/build
+cmake ..
+make
+make install
+ldconfig
+
+#get the SoapyRTLSDR support module
+echo "\n...SoapyRTLSDR..."
+cd ~
+git clone https://github.com/pothosware/SoapyRTLSDR
+mkdir SoapyRTLSDR/build
+cd SoapyRTLSDR/build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make
+make install
+ldconfig
+
+#get the SoapySDRPlay support module
+echo "\n...SoapySDRPlay..."
+cd ~
+git clone https://github.com/pothosware/SoapySDRPlay
+mkdir SoapySDRPlay/build
+cd SoapySDRPlay/build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make
+make install
+ldconfig
+
+#open source sdrplay driver from f4exb
+cd ~
+git clone https://github.com/f4exb/libmirisdr-4
+mkdir libmirisdr-4/build
+cd libmirisdr-4/build
+cmake ../
+make
+make install
+ldconfig
+
+#get the sdrplay linux api installer manually
+#from http://sdrplay.com/linuxdl.php
+#then enable and run it:
+echo "\n...SDRplay MiricsAPI..."
+cd ~
+chmod 755 SDRplay_RSP_MiricsAPI-Linux-1.97.1.run
+./SDRplay_RSP_MiricsAPI-Linux-1.97.1.run
+
+#get sdrplay support from osmocom
+echo "\n...gr-osmosdr..."
+cd ~
+#use the original osmocom drivers
+#git clone git://git.osmocom.org/gr-osmosdr
+#mkdir gr-osmosdr/build
+#cd gr-osmosdr/build
+#cmake -DENABLE_NONFREE=TRUE ../
+#make
+#make install
+#ldconfig
+
+#else use the hb9fxq fork with better sdrplay support
+#git clone https://github.com/krippendorf/gr-osmosdr-fork-sdrplay
+#mkdir gr-osmosdr-fork-sdrplay/build
+#cd gr-osmosdr-fork-sdrplay/build
+#cmake -DENABLE_NONFREE=TRUE ../
+#make
+#make install
+#ldconfig
+
+#else Freeman Pascal's fork with even fresher sdrplay support re api 1.97.1
+cd ~
+git clone https://github.com/Analias/gr-osmosdr-fork-sdrplay
+mkdir gr-osmosdr-fork-sdrplay/build
+cd gr-osmosdr-fork-sdrplay/build
+cmake -DENABLE_NONFREE=TRUE ../
+make
+make install
+ldconfig
+
+#get the SoapyHackRF support module
+cd ~
+git clone https://github.com/pothosware/SoapyHackRF
+mkdir SoapyHackRF/build
+cd SoapyHackRF/build
+cmake ..
+make
+make install
+ldconfig
+
+#get rtaudio (dependency of SoapyAudio)
+echo "\n\n...rtaudio"
+cd ~
+git clone https://github.com/thestk/rtaudio
+#mkdir rtaudio/build
+#cd rtaudio/build
+#cmake .. -DAUDIO_LINUX_PULSE=ON
+cd rtaudio
+./autogen.sh --with-pulse
+make
+make install
+ldconfig
+cd ~
+rm -rf rtaudio
+
+#get the SoapyAudio support module
+echo "\n\n...soapy audio"
+cd ~
+git clone https://github.com/pothosware/SoapyAudio
+mkdir SoapyAudio/build
+cd SoapyAudio/build
+cmake ..
+make
+make install
+ldconfig
+cd ~
+rm -rf SoapyAudio
+
+#get qtradio
+echo "\n...QtRadio..."
+cd ~
+git clone https://github.com/alexlee188/ghpsdr3-alex
+cd ghpsdr3-alex
+sh cleanup.sh
+git checkout master
+autoreconf -i
+./configure
+make -j4 all
+make install
 
 #install OpenwebRX and dependencies
 echo "\nGetting the csdr dsp library..."
@@ -190,51 +324,7 @@ make
 cp ~/cudaSDR/Source/bin/cudaSDR /usr/local/bin/cudaSDR
 cp ~/cudaSDR/Source/bin/settings.ini /usr/local/bin/settings.ini
 
-#install CubicSDR and dependencies
-#get liquid-dsp
-echo "\n...liquid-dsp..."
-cd ~
-git clone https://github.com/jgaeddert/liquid-dsp
-cd liquid-dsp
-./bootstrap.sh
-./configure
-make
-make install
-ldconfig
-
-#get SoapySDR
-echo "\n...SoapySDR..."
-cd ~
-git clone https://github.com/pothosware/SoapySDR
-mkdir SoapySDR/build
-cd SoapySDR/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
-ldconfig
-
-#get the SoapyRTLSDR support module
-echo "\n...SoapyRTLSDR..."
-cd ~
-git clone https://github.com/pothosware/SoapyRTLSDR
-mkdir SoapyRTLSDR/build
-cd SoapyRTLSDR/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
-ldconfig
-
-#get the SoapySDRPlay support module
-echo "\n...SoapySDRPlay..."
-cd ~
-git clone https://github.com/pothosware/SoapySDRPlay
-mkdir SoapySDRPlay/build
-cd SoapySDRPlay/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
-ldconfig
-
+#install CubicSDR
 #get CubicSDR
 echo "\n...CubicSDR..."
 cd ~
@@ -260,35 +350,33 @@ Type=Application
 Categories=Network;HamRadio;' > /usr/share/applications/cubicsdr.desktop
 
 #get dump1090 for rtl-sdr devices
-echo "\n...dump1090 for rtl-sdr devices..."
+echo "\n\n...dump1090 for rtl-sdr devices..."
 cd ~
 #git clone https://github.com/mutability/dump1090
 git clone https://github.com/MalcolmRobb/dump1090
 cd dump1090
 make
 mkdir /usr/local/sbin/dump1090
-cp -ar ~/dump1090/public_html /usr/local/sbin/dump1090/public_html
-cp ~/dump1090/testfiles /usr/local/sbin/dump1090/testfiles
-cp ~/dump1090/tools /usr/local/sbin/dump1090/tools
-cp ~/dump1090/dump1090 /usr/local/sbin/dump1090/dump1090
-cp ~/dump1090/view1090 /usr/local/sbin/dump1090/view1090
-cp ~/dump1090/LICENSE /usr/local/sbin/dump1090/LICENSE
-cp ~/dump1090/README.md /usr/local/sbin/dump1090/README.md
-cp ~/dump1090/README-dump1090.md /usr/local/sbin/dump1090/README-dump1090.md
-cp ~/dump1090/README-json.md /usr/local/sbin/dump1090/README-json.md
+cp -ar public_html /usr/local/sbin/dump1090/public_html
+cp -ar testfiles /usr/local/sbin/dump1090/testfiles
+cp -ar tools /usr/local/sbin/dump1090/tools
+cp dump1090 /usr/local/sbin/dump1090/dump1090
+cp view1090 /usr/local/sbin/dump1090/view1090
+cp README.md /usr/local/sbin/dump1090/README.md
 
 #get dump1090 with advanced device support
-echo "\n...dump1090 for advanced devices..."
+echo "\n\n...dump1090 for advanced devices..."
 cd ~
 git clone https://github.com/itemir/dump1090_sdrplus
 cd dump1090_sdrplus
 make
 mkdir /usr/local/sbin/dump1090_sdrplus
-cp -ar ~/dump1090_sdrplus/testfiles /usr/local/sbin/dump1090_sdrplus/testfiles
-cp -ar ~/dump1090_sdrplus/tools /usr/local/sbin/dump1090_sdrplus/tools
-cp ~/dump1090_sdrplus/dump1090 /usr/local/sbin/dump1090_sdrplus/dump1090
-cp ~/dump1090_sdrplus/gmap.html /usr/local/sbin/dump1090_sdrplus/gmap.html
-cp ~/dump1090_sdrplus/README.md /usr/local/sbin/dump1090_sdrplus/README.md
+cp -ar images /usr/local/sbin/dump1090_sdrplus/images
+cp -ar testfiles /usr/local/sbin/dump1090_sdrplus/testfiles
+cp -ar tools /usr/local/sbin/dump1090_sdrplus/tools
+cp gmap.html /usr/local/sbin/dump1090_sdrplus/gmap.html
+cp dump1090 /usr/local/sbin/dump1090_sdrplus/dump1090
+cp README.md /usr/local/sbin/dump1090_sdrplus/README.md
 
 #create dump1090 menu entry via .desktop file
 echo '[Desktop Entry]
@@ -362,19 +450,6 @@ cd ~
 wget "http://physics.princeton.edu/pulsar/k1jt/wsjtx_1.6.0_amd64.deb"
 dpkg -i wsjtx_1.6.0_amd64.deb
 
-#get WSPR-X
-echo "\n...WSPR-X..."
-cd ~
-svn co svn://svn.code.sf.net/p/wsjt/wsjt/branches/wsprx
-cd ~/wsprx/lib
-make -f Makefile.linux
-cd ..
-qmake
-make
-cp ~/wsprx_install/WSPRcode /usr/local/bin/WSPRcode
-cp ~/wsprx_install/wsprd /usr/local/bin/wsprd
-cp ~/wsprx_install/wsprx /usr/local/bin/wsprx
-
 #################################
 cd ~
 echo "\nFinished installing software from source code!"
@@ -432,7 +507,6 @@ cp ~/files/apps/skywavelinux.desktop /usr/share/applications/skywavelinux.deskto
 cp ~/files/apps/softrock-controller.desktop /usr/share/applications/softrock-controller.desktop
 cp ~/files/apps/ubiquity.desktop /usr/share/applications/ubiquity.desktop
 cp ~/files/apps/wsjtx.desktop /usr/share/applications/wsjtx.desktop
-cp ~/files/apps/wsprx.desktop /usr/share/applications/wsprx.desktop
 cp ~/files/apps/wxtoimg.desktop /usr/share/applications/wxtoimg.desktop
 cp ~/files/icons/Cjdns_logo.png /usr/share/pixmaps/Cjdns_logo.png
 cp ~/files/icons/CQ.png /usr/share/pixmaps/CQ.png
@@ -440,13 +514,64 @@ cp ~/files/icons/CudaSDR.png /usr/share/pixmaps/CudaSDR.png
 cp ~/files/icons/dump1090.png /usr/share/pixmaps/dump1090.png
 cp ~/files/icons/sdrtrunk.png /usr/share/pixmaps/sdrtrunk.png
 cp ~/files/icons/wsjtx_icon.png /usr/share/pixmaps/wsjtx_icon.png
-cp ~/files/icons/wsprx_icon.png /usr/share/pixmaps/wsprx_icon.png
 cp ~/files/icons/wxtoimg.png /usr/share/pixmaps/wxtoimg.png
 cp -ar ~/files/opt/html /opt/html
 cp -ar ~/files/openwebrx /usr/local/sbin/openwebrx
 cp -ar ~/files/etc/skel /etc/skel
 
+#rename some files to disable services
+mv /etc/init/avahi-cups-reload.conf /etc/init/avahi-cups-reload.disabled
+mv /etc/init/bluetooth.conf /etc/init/bluetooth.disabled
+mv /etc/init/tty3.conf /etc/init/tty3.disabled
+mv /etc/init/tty4.conf /etc/init/tty4.disabled
+mv /etc/init/tty5.conf /etc/init/tty5.disabled
+mv /etc/init/tty6.conf /etc/init/tty6.disabled
+
 #run volk_profile to optimise for certain sdr apps
 echo "\nRunning volk_profile to optimise certain SDR applications"
+volk_profile
+
+#blacklist the rtl28xxu kernel driver
+echo "blacklist dvb_usb_rtl28xxu
+blacklist e4000
+blacklist rtl2832
+blacklist msi001
+blacklist msi2500" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+
+#set performance configuration in sysctl.conf
+echo "
+############
+net.core.somaxconn = 1000
+net.core.netdev_max_backlog = 5000
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_wmem = 4096 12582912 16777216
+net.ipv4.tcp_rmem = 4096 12582912 16777216
+net.ipv4.tcp_max_syn_backlog = 8096
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.ip_local_port_range = 10240 65535
+net.ipv4.icmp_echo_ignore_all = 1
+# Set swappiness
+vm.swappiness=10
+# Improve cache management
+vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+
+#configure for realtime audio
+echo "@audio - rtprio 95
+@audio - memlock 512000
+@audio - nice -19" > /etc/security/limits.d/audio.conf
+
+#set performance config in rc.local
+echo "#rtc and hpet timers
+echo 3072 > /sys/class/rtc/rtc0/max_user_freq
+echo 3072 > /proc/sys/dev/hpet/max-user-freq" >> /etc/init.d/rc.local
+
+#move /tmp to ram
+cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
+systemctl enable tmp.mount
+
+#remove development software
+apt-get purge unity-tweak-tool squashfs-tools genisoimage
 
 echo "\nAll tasks finished!"
