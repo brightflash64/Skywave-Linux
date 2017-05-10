@@ -1,25 +1,29 @@
 #!/bin/bash
 start1() {
+cp /usr/local/sbin/dump1090/public_html/config.js.orig /usr/local/sbin/dump1090/public_html/config.js
 # edit the config file with actual lat/lon
-sed -i "14s/.*/CONST_CENTERLAT = $latitude;/" /usr/local/sbin/dump1090/public_html/config.js
-sed -i "15s/.*/CONST_CENTERLON = $longitude;/" /usr/local/sbin/dump1090/public_html/config.js
-sed -i "28s/.*/SiteLat = $latitude;/" /usr/local/sbin/dump1090/public_html/config.js
-sed -i "29s/.*/SiteLon = $longitude;/" /usr/local/sbin/dump1090/public_html/config.js
+sed -i "
+     14s/.*/CONST_CENTERLAT = $latitude;/ ;
+     15s/.*/CONST_CENTERLON = $longitude;/ ;
+     28s/.*/SiteLat = $latitude;/ ;
+     29s/.*/SiteLon = $longitude;/" /usr/local/sbin/dump1090/public_html/config.js
 
 # run dump1090
 cd /usr/local/sbin/dump1090/
-./dump1090 --net --interactive --phase-enhance --lat $latitude --lon $longitude --ppm $ppm &
+./dump1090 --net --interactive --phase-enhance --gain -10 --lat $latitude --lon $longitude --ppm $ppm &
 firefox --new-tab http://127.0.0.1:8080
 }
 
 start2() {
+cp /usr/local/sbin/dump1090_sdrplus/gmap.html.orig /usr/local/sbin/dump1090_sdrplus/gmap.html
 # edit gmap.html to enter actual lat/lon
-sed -i "42s/.*/    CenterLat=$latitude;/" /usr/local/sbin/dump1090_sdrplus/gmap.html
-sed -i "43s/.*/    CenterLon=$longitude;/" /usr/local/sbin/dump1090_sdrplus/gmap.html
+sed -i "
+     42s/.*/    CenterLat=$latitude;/ ;
+     43s/.*/    CenterLon=$longitude;/" /usr/local/sbin/dump1090_sdrplus/gmap.html
 
 # run dump1090
 cd /usr/local/sbin/dump1090_sdrplus/
-./dump1090 --net --interactive --aggressive --ppm $ppm &
+./dump1090 --net --interactive --aggressive &
 firefox --new-tab http://127.0.0.1:8080
 }
 
@@ -44,4 +48,3 @@ else
 fi
 
 killall -9 dump1090
-
