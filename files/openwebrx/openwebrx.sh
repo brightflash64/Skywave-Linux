@@ -17,7 +17,7 @@ sed -i "
      137s/.*/client_audio_buffer_size = 10/;
      143s/.*/start_mod = \"$mode\"/;
      150s/.*/waterfall_min_level = -80/;
-     151s/.*/waterfall_max_level = -10/" /usr/local/sbin/openwebrx/config_webrx.py
+     151s/.*/waterfall_max_level = -15/" /usr/local/sbin/openwebrx/config_webrx.py
 
 #Start OpenWebRX
 cd /usr/local/sbin/openwebrx/
