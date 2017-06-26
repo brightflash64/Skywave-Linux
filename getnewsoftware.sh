@@ -67,8 +67,9 @@ Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applicat
 #install rtl-sdr drivers
 echo "\n...rtl-sdr firmware..."
 cd ~
+#git clone https://github.com/thaolia/librtlsdr-thaolia
+#mv librtlsdr-thaolia rtl-sdr
 #git clone https://git.osmocom.org/rtl-sdr
-#alternate mutability version
 git clone https://github.com/mutability/rtl-sdr
 mkdir rtl-sdr/build
 cd rtl-sdr/build
