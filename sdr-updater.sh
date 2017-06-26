@@ -174,6 +174,8 @@ getrtlsdr(){
 #install rtl-sdr drivers
 echo "\n\n...rtl-sdr firmware..."
 cd ~
+#git clone https://github.com/thaolia/librtlsdr-thaolia
+#mv librtlsdr-thaolia rtl-sdr
 git clone https://git.osmocom.org/rtl-sdr
 mkdir rtl-sdr/build
 cd rtl-sdr/build
