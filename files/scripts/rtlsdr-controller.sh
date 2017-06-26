@@ -2,7 +2,7 @@
 
 #for rtl-sdr reception in ghpsdr3-alex / QtRadio
 runme() {
-gnome-terminal -e 'rtlsdr-server -d3 -g240 -s250000' &
+gnome-terminal -e 'rtlsdr-server -d3 -g160 -s250000' &
 sleep 2
 gnome-terminal -e 'dspserver --lo 9000' &
 sleep 2
