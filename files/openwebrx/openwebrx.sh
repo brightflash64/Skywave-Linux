@@ -10,13 +10,13 @@ sed -i "
      51s/.*/photo_height=316/;
      52s/.*/photo_title=\"Scenery from the Interneational Space Station\"/;
      75s/.*/center_freq = $ctrfreq$mega/;
-     76s/.*/rf_gain = 25/;
+     76s/.*/rf_gain = 16/;
      77s/.*/ppm = $corr/;
      79s/.*/audio_compression=\"none\"/;
      94s/.*/start_rtl_command=\"rtl_sdr -s {samp_rate} -f {center_freq} -p {ppm} -g {rf_gain} -\".format(rf_gain=rf_gain, center_freq=center_freq, samp_rate=samp_rate, ppm=ppm)/;
      137s/.*/client_audio_buffer_size = 10/;
      143s/.*/start_mod = \"$mode\"/;
-     150s/.*/waterfall_min_level = -80/;
+     150s/.*/waterfall_min_level = -67/;
      151s/.*/waterfall_max_level = -15/" /usr/local/sbin/openwebrx/config_webrx.py
 
 #Start OpenWebRX
