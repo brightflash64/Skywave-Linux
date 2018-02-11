@@ -7,7 +7,6 @@
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version. There is NO warranty; not even for
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 Encoding=UTF-8
 
 aptupgrade(){
@@ -70,7 +69,6 @@ cmake ../ -DINSTALL_UDEV_RULES=ON
 make
 make install
 ldconfig
-rm -rf rtl-sdr
 }
 
 getsoapy(){
@@ -161,33 +159,10 @@ cp -ar ~/openwebrx /usr/local/sbin/openwebrx
 
 getcubicsdr(){
 #install CubicSDR and dependencies
-echo "\n\n...Getting CubicSDR and dependencies"
-echo "\n\n...liquid-dsp..."
 cd ~
-git clone https://github.com/jgaeddert/liquid-dsp
-cd liquid-dsp
-./bootstrap.sh
-./configure
-make
-make install
-ldconfig
-
-#get CubicSDR
-echo "\n\n...CubicSDR..."
-cd ~
-git clone https://github.com/cjcliffe/CubicSDR
-mkdir CubicSDR/build
-cd CubicSDR/build
-cmake ../
-make
-
-#move it to /usr/local/sbin/CubicSDR
-#mkdir /usr/local/sbin/CubicSDR
-rm -rf /usr/local/sbin/CubicSDR
-cp -ar ~/CubicSDR/build/x64/* /usr/local/sbin/CubicSDR
-cd ~
-rm -rf liquid-dsp
-rm -rf CubicSDR
+wget "https://github.com/cjcliffe/CubicSDR/releases/download/0.2.3/CubicSDR-0.2.3-x86_64.AppImage"
+chmod +x CubicSDR-0.2.3-x86_64.AppImage
+mv ~/CubicSDR-0.2.3-x86_64.AppImage /usr/local/sbin/CubicSDR/CubicSDR.AppImage
 }
 
 getremotesdrclient(){
@@ -214,7 +189,6 @@ Categories=Network;HamRadio;' > /usr/share/applications/remotesdrclient.desktop
 
 rtlsdrairband(){
 #get rtlsdr-airband
-cd ~
 git clone https://github.com/szpajder/RTLSDR-Airband
 cd RTLSDR-Airband
 PLATFORM=x86 NFM=1 make
@@ -228,18 +202,13 @@ autoreconf
 ./configure
 make
 make acarsserv
-cp acarsdec /usr/local/sbin/acarsdec
-cp acarsserv /usr/local/sbin/acarsdec
-cd ~
 
+cd ~
 #get dumpvdl2
 git clone https://github.com/szpajder/dumpvdl2
 cd dumpvdl2
 make
 cp ~/dumpvdl2/dumpvdl2 /usr/local/bin/dumpvdl2
-cd ~
-rm -rf acarsdec
-rm -rf dumpvdl2
 }
 
 getdump1090(){
@@ -308,7 +277,6 @@ rm -rf rtaudio
 getcrypto(){
 #lantern
 echo "\n\n...getting Lantern..."
-cd ~
 wget "https://s3.amazonaws.com/lantern/lantern-installer-beta-64-bit.deb"
 dpkg -i lantern-installer-beta-64-bit.deb
 
@@ -320,6 +288,8 @@ Exec=sh -c "lantern -addr 127.0.0.1:8118"
 Icon=lantern
 Comment=Censorship circumvention (proxy / vpn) application for unblocked web browsing.
 Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applications/lantern.desktop
+
+echo "\n\n...cleaning up a bit..."
 
 #update cjdns
 echo "\n\n...updating cjdns..."
@@ -344,7 +314,7 @@ rm ssh
 cp openssh-portable/ssh .
 }
 
-ans=$(zenity  --list --height 470 --width 420 --text "SDR Software Updater" --radiolist  --column "Pick" --column "Action" \
+ans=$(zenity  --list --height 270 --width 420 --text "SDR Software Updater" --radiolist  --column "Pick" --column "Action" \
 TRUE "Upgrade Base System and Drivers with Apt" FALSE "Update QtRadio" FALSE "Update CubicSDR" FALSE "Update RemoteSdrClient" \
 FALSE "Update OpenwebRX" FALSE "Update R820tweak" FALSE "Update SoapySDR Drivers" FALSE "Update Dump1090" \
 FALSE "Update SDRPlay Drivers" FALSE "Update RTL-SDR"  FALSE "Update RTLSDR-Airband" FALSE "Update SDRTrunk" \
@@ -398,4 +368,3 @@ FALSE "Update WSJT-X" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Cry
 	fi
 
 echo "\n\nScript Execution Completed!"
-read -p "\n\nPress any key to continue..." 
