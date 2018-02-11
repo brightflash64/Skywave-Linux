@@ -1,29 +1,37 @@
 #! /bin/sh
-#
-#System setup script for Skywave Linux v2.2
+
+#System setup script for Skywave Linux v3.1
 #Use on Ubuntu / Mint / Debian
 #Run this script as root within the chroot!
 
-#increase Ubuntu privacy, recuce resource load, remove conflicting packages
-apt purge --auto-remove speech-dispatcher modemmanager cheese libreoffice* rhythmbox* shotwell unity-lens-shopping webbrowser-app deja-dup indicator-messages plymouth-theme-ubuntu-text snap-confine* snapd* ubuntu-core-launcher* whoopsie zeitgeist zeitgeist-core
-systemctl disable snapd.refresh.service
-apt -y autoremove
+#increase Ubuntu privacy, reduce resource load, remove conflicting packages
+#remove packages that came from unity, as we now use the mate desktop 
+apt purge --auto-remove speech-dispatcher modemmanager cheese* libreoffice* rhythmbox* shotwell unity-lens-shopping webbrowser-app deja-dup indicator-messages nautilus* plymouth-theme-ubuntu-text snap-confine* ubuntu-core-launcher* ubiquity-ubuntu-artwork whoopsie zeitgeist zeitgeist-core unity-control-center unity-control-center-faces
+
+#remove some MATE and Gnome apps
+apt purge --auto-remove aisleriot cheese file-roller evince gedit gdm3 gnome-* mate-utils-common xul-ext-ubufox
+
 apt clean
 
 echo "\nSetting up repositories..."
-#firefox, gqrx, fldigi, kodi
+#firefox, gqrx, fldigi, kodi, pulseefeects, etc
 add-apt-repository -y ppa:mozillateam/firefox-next
-add-apt-repository -y ppa:bladerf/bladerf-snapshots
+add-apt-repository -y ppa:bladerf/bladerf
 add-apt-repository -y ppa:dansmith/chirp-snapshots
 add-apt-repository -y ppa:ettusresearch/uhd
+add-apt-repository -y ppa:llb/freesrp
 add-apt-repository -y ppa:gpredict-team/daily
 add-apt-repository -y ppa:gqrx/gqrx-sdr
 add-apt-repository -y ppa:kamalmostafa/fldigi
+add-apt-repository -y ppa:nm-l2tp/network-manager-l2tp
 add-apt-repository -y ppa:noobslab/icons
 add-apt-repository -y ppa:noobslab/themes
+add-apt-repository -y ppa:pothosware/framework
+add-apt-repository -y ppa:pothosware/support
 add-apt-repository -y ppa:team-xbmc/unstable
 add-apt-repository -y ppa:myriadrf/drivers
 add-apt-repository -y ppa:myriadrf/gnuradio
+add-apt-repository -y ppa:yunnxx/gnome3
 
 #Ubuntu
 add-apt-repository -y multiverse
@@ -34,6 +42,21 @@ add-apt-repository -y xenial-updates
 add-apt-repository -y ppa:ubuntu-x-swat/updates
 add-apt-repository -y ppa:xorg-edgers/ppa
 
+#node.js
+wget -O- https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+# get bitmask
+add-apt-repository "deb http://deb.bitmask.net/debian xenial main"
+wget -O- https://dl.bitmask.net/apt.key | apt-key add -
+apt update
+apt install bitmask leap-archive-keyring
+
+#python tools for psiphon
+pip install wget pexpect cryptography
+
+# replace mate-screenshot with a symlink to gnome-screenshot
+ln -s gnome-screenshot mate-screenshot
+
 # get everything that we want from the repositories
 echo "\nGetting packages from the repositories..."
 apt update
@@ -42,35 +65,15 @@ apt -y install $(grep -vE "^\s*#" newsoftware  | tr "\n" " ")
 echo "\nFinished installing software from the repositories."
 echo "\nStarting installation from source code.  Please stand by..."
 
-#cjdns
-echo "\n...CJDNS..."
-cd ~
-cp ~/files/scripts/cjdns.sh /etc/init.d/cjdns
-chmod +x /etc/init.d/cjdns
-/etc/init.d/cjdns install
-#set link for nodejs
-ln -s /usr/bin/nodejs /usr/bin/node
-
-#lantern
-wget "https://s3.amazonaws.com/lantern/lantern-installer-beta-64-bit.deb"
-dpkg -i lantern-installer-beta-64-bit.deb
-
-#replace the .desktop file
-echo '[Desktop Entry]
-Type=Application
-Name=Lantern
-Exec=sh -c "lantern -addr 127.0.0.1:8118"
-Icon=lantern
-Comment=Censorship circumvention application for unblocked web browsing.
-Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applications/lantern.desktop
-
 #install rtl-sdr drivers
 echo "\n...rtl-sdr firmware..."
 cd ~
+#git clone https://git.osmocom.org/rtl-sdr
+#git clone https://github.com/steve-m/librtlsdr
+#git clone https://github.com/mutability/rtl-sdr
 #git clone https://github.com/thaolia/librtlsdr-thaolia
 #mv librtlsdr-thaolia rtl-sdr
-#git clone https://git.osmocom.org/rtl-sdr
-git clone https://github.com/mutability/rtl-sdr
+git clone https://github.com/AB9IL/rtl-sdr
 mkdir rtl-sdr/build
 cd rtl-sdr/build
 cmake ../ -DINSTALL_UDEV_RULES=ON
@@ -98,17 +101,6 @@ make
 make install
 ldconfig
 
-#install rtl_hpsdr
-#build librtlsdr, but only keep rtl_hpsdr
-echo "\n...rtl_hpsdr..."
-cd ~
-git clone https://github.com/n1gp/librtlsdr
-mkdir librtlsdr/build
-cd librtlsdr/build
-cmake ..
-make
-cp ~/librtlsdr/build/src/rtl_hpsdr /usr/local/bin/rtl_hpsdr
-
 #install airspy support
 echo "\n...Airspy Host..."
 cd ~
@@ -120,70 +112,15 @@ make
 make install
 ldconfig
 
-#install hackrf support
-echo "\n...hackrf..."
+#get SoapyPlutoSDR support module
+echo "\n\n...ADALM-PlutoSDR"
 cd ~
-git clone https://github.com/mossmann/hackrf
-mkdir hackrf/host/build
-cd hackrf/host/build
-cmake ../ -DINSTALL_UDEV_RULES=ON
-make
-make install
-ldconfig
-
-#get liquid-dsp
-echo "\n...liquid-dsp..."
-cd ~
-git clone https://github.com/jgaeddert/liquid-dsp
-cd liquid-dsp
-./bootstrap.sh
-./configure
-make
-make install
-ldconfig
-
-#get SoapySDR
-echo "\n...SoapySDR..."
-cd ~
-git clone https://github.com/pothosware/SoapySDR
-mkdir SoapySDR/build
-cd SoapySDR/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
-ldconfig
-
-#get the SoapyAirspy support module
-echo "\n\n...soapy airspy"
-cd ~
-git clone https://github.com/pothosware/SoapyAirspy
-mkdir SoapyAirspy/build
-cd SoapyAirspy/build
+git clone https://github.com/jocover/SoapyPlutoSDR
+mkdir SoapyPlutoSDR/build
+cd SoapyPlutoSDR/build
 cmake ..
 make
-make install
-ldconfig
-
-#get the SoapyOsmo support module
-echo "\n\n...soapy osmo"
-cd ~
-git clone https://github.com/pothosware/SoapyOsmo
-mkdir SoapyOsmo/build
-cd SoapyOsmo/build
-cmake ..
-make
-make install
-ldconfig
-
-#get the SoapyRTLSDR support module
-echo "\n...SoapyRTLSDR..."
-cd ~
-git clone https://github.com/pothosware/SoapyRTLSDR
-mkdir SoapyRTLSDR/build
-cd SoapyRTLSDR/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
+sudo make install
 ldconfig
 
 #get the SoapySDRPlay support module
@@ -198,22 +135,28 @@ make install
 ldconfig
 
 #open source sdrplay driver from f4exb
-cd ~
-git clone https://github.com/f4exb/libmirisdr-4
-mkdir libmirisdr-4/build
-cd libmirisdr-4/build
-cmake ../
-make
-make install
-ldconfig
-
 #get the sdrplay linux api installer manually
 #from http://sdrplay.com/linuxdl.php
 #then enable and run it:
-echo "\n...SDRplay MiricsAPI..."
-cd ~
-chmod 755 SDRplay_RSP_MiricsAPI-Linux-1.97.1.run
-./SDRplay_RSP_MiricsAPI-Linux-1.97.1.run
+#echo "\n\n...SDRplay MiricsAPI..."
+#echo "\nGet it manually from http://sdrplay.com/"
+#echo "\nRobots are people too."
+#cd ~
+#chmod 755 SDRplay_RSP_API-Linux-2.10.2.run
+#./SDRplay_RSP_API-Linux-2.10.2.run
+#rm -f SDRplay_RSP_API-Linux-2.10.2.run
+
+#open source sdrplay driver from f4exb
+#cd ~
+#git clone https://github.com/f4exb/libmirisdr-4
+#mkdir libmirisdr-4/build
+#cd libmirisdr-4/build
+#cmake ../
+#make
+#make install
+#ldconfig
+#cd ~
+#rm -rf libmirisdr-4
 
 #get sdrplay support from osmocom
 echo "\n...gr-osmosdr..."
@@ -237,24 +180,14 @@ cd ~
 #ldconfig
 
 #else Freeman Pascal's fork with even fresher sdrplay support re api 1.97.1
-cd ~
-git clone https://github.com/Analias/gr-osmosdr-fork-sdrplay
-mkdir gr-osmosdr-fork-sdrplay/build
-cd gr-osmosdr-fork-sdrplay/build
-cmake -DENABLE_NONFREE=TRUE ../
-make
-make install
-ldconfig
-
-#get the SoapyHackRF support module
-cd ~
-git clone https://github.com/pothosware/SoapyHackRF
-mkdir SoapyHackRF/build
-cd SoapyHackRF/build
-cmake ..
-make
-make install
-ldconfig
+#cd ~
+#git clone https://github.com/Analias/gr-osmosdr-fork-sdrplay
+#mkdir gr-osmosdr-fork-sdrplay/build
+#cd gr-osmosdr-fork-sdrplay/build
+#cmake -DENABLE_NONFREE=TRUE ../
+#make
+#make install
+#ldconfig
 
 #get rtaudio (dependency of SoapyAudio)
 echo "\n\n...rtaudio"
@@ -296,6 +229,17 @@ autoreconf -i
 make -j4 all
 make install
 
+#Create a better launcher
+echo '[Desktop Entry]
+Type=Application
+Name=QtRadio
+Name[xx]=QtRadio
+Generic Name=SDR GUI
+Exec=QtRadio
+Icon=QtRadio
+Terminal=False
+Categories=;HamRadio;' > /usr/local/share/applications/QtRadio.desktop
+
 #install OpenwebRX and dependencies
 echo "\nGetting the csdr dsp library..."
 # get the csdr dsp library
@@ -315,40 +259,43 @@ git clone https://github.com/simonyiszk/openwebrx
 # move the files
 mv -ar ~/openwebrx /usr/local/sbin/openwebrx
 
-#install cudaSDR
-echo "\n...cudaSDR..."
-cd ~
-git clone https://github.com/n1gp/cudaSDR
-cd cudaSDR/Source
-qmake cudaSDR.pro
-make
-cp ~/cudaSDR/Source/bin/cudaSDR /usr/local/bin/cudaSDR
-cp ~/cudaSDR/Source/bin/settings.ini /usr/local/bin/settings.ini
-
 #install CubicSDR
-#get CubicSDR
-echo "\n...CubicSDR..."
 cd ~
-git clone https://github.com/cjcliffe/CubicSDR
-mkdir CubicSDR/build
-cd CubicSDR/build
-cmake ../
-make
-
-#move it to /opt
-mkdir /opt/CubicSDR
-cp -ar ~/CubicSDR/build/x64/* /opt/CubicSDR
+wget "https://github.com/cjcliffe/CubicSDR/releases/download/0.2.3/CubicSDR-0.2.3-x86_64.AppImage"
+chmod +x CubicSDR-0.2.3-x86_64.AppImage
+mv ~/CubicSDR-0.2.3-x86_64.AppImage /usr/local/sbin/CubicSDR/CubicSDR.AppImage
+}
 
 #create menu entry via .desktop file
 echo '[Desktop Entry]
 Name=CubicSDR
 GenericName=CubicSDR
 Comment=Software Defined Radio
-Exec=/opt/CubicSDR/CubicSDR
+Exec=/usr/local/sbin/CubicSDR/CubicSDR.AppImage
 Icon=/opt/CubicSDR/CubicSDR.ico
 Terminal=false
 Type=Application
 Categories=Network;HamRadio;' > /usr/share/applications/cubicsdr.desktop
+
+#get RemoteSdrClient-NS (for RFSpace hardware)
+cd ~
+git clone https://github.com/csete/remotesdrclient-ns
+cd remotesdrclient-ns
+make
+#manually copy the binary to /usr/local/bin
+cp ~/remotesdrclient-ns/remotesdrclient-ns /usr/local/bin/remotesdrclient-ns
+#manually copy the icon to /usr/share/pixmaps
+cp ~/remotesdrclient-ns/RemoteSdrClient.png /usr/share/pixmaps/RemoteSdrClient.png
+#create menu entry via .desktop file
+echo '[Desktop Entry]
+Name=RemoteSdrClient
+GenericName=RemoteSdrClient
+Comment=Remote Client for RFSpace SDRs
+Exec=/usr/local/bin/remotesdrclient-ns
+Icon=RemoteSdrClient.png
+Terminal=false
+Type=Application
+Categories=Network;HamRadio;' > /usr/share/applications/remotesdrclient.desktop
 
 #get dump1090 for rtl-sdr devices
 echo "\n\n...dump1090 for rtl-sdr devices..."
@@ -365,20 +312,6 @@ cp dump1090 /usr/local/sbin/dump1090/dump1090
 cp view1090 /usr/local/sbin/dump1090/view1090
 cp README.md /usr/local/sbin/dump1090/README.md
 
-#get dump1090 with advanced device support
-echo "\n\n...dump1090 for advanced devices..."
-cd ~
-git clone https://github.com/itemir/dump1090_sdrplus
-cd dump1090_sdrplus
-make
-mkdir /usr/local/sbin/dump1090_sdrplus
-cp -ar images /usr/local/sbin/dump1090_sdrplus/images
-cp -ar testfiles /usr/local/sbin/dump1090_sdrplus/testfiles
-cp -ar tools /usr/local/sbin/dump1090_sdrplus/tools
-cp gmap.html /usr/local/sbin/dump1090_sdrplus/gmap.html
-cp dump1090 /usr/local/sbin/dump1090_sdrplus/dump1090
-cp README.md /usr/local/sbin/dump1090_sdrplus/README.md
-
 #create dump1090 menu entry via .desktop file
 echo '[Desktop Entry]
 Name=Dump1090
@@ -389,6 +322,28 @@ Icon=/usr/share/pixmaps/dump1090.png
 Terminal=false
 Type=Application
 Categories=Network;HamRadio;ADSB;Radio;' > /usr/share/applications/dump1090.desktop
+
+#get rtlsdr-airband
+git clone https://github.com/szpajder/RTLSDR-Airband
+cd RTLSDR-Airband
+PLATFORM=x86 NFM=1 make
+make install
+
+#get acarsdec
+cd ~
+git clone https://github.com/AB9IL/acarsdec
+cd acarsdec
+autoreconf
+./configure
+make
+make acarsserv
+
+cd ~
+#get dumpvdl2
+git clone https://github.com/szpajder/dumpvdl2
+cd dumpvdl2
+make
+cp ~/dumpvdl2/dumpvdl2 /usr/local/bin/dumpvdl2
 
 #get wxtoimg
 echo "\n...WxtoImg..."
@@ -424,12 +379,8 @@ Categories=HamRadio;Audio;Video' > /usr/share/applications/redsea-controller.des
 #sdrtrunk
 echo "\n...SDRTrunk..."
 cd ~
-wget "https://github.com/DSheirer/sdrtrunk/releases/download/v0.2.0/sdrtrunk_0.2.0.tar.gz"
-tar -zxvf sdrtrunk_0.2.0.tar.gz
-cp ~/sdrtrunk/config/*.rules /etc/udev/rules.d/
-
-#move it to /opt
-cp -ar ~/sdrtrunk /opt/sdrtrunk
+wget "https://github.com/DSheirer/sdrtrunk/releases/download/v0.3.3-beta.3/sdr-trunk-all-0.3.3-beta.3.jar"
+mv sdr-trunk-all-0.3.3-beta.3.jar /usr/local/sbin/sdrtrunk.jar
 
 #create launcher
 echo '[Desktop Entry]
@@ -448,8 +399,8 @@ Categories=Ham;Hamradio;SDR;Radio;' > /usr/share/applications/sdrtrunk.desktop
 #get WSJT-X
 echo "\n...WSJT-X..."
 cd ~
-wget "http://physics.princeton.edu/pulsar/k1jt/wsjtx_1.6.0_amd64.deb"
-dpkg -i wsjtx_1.6.0_amd64.deb
+wget "http://physics.princeton.edu/pulsar/k1jt/wsjtx_1.8.0_amd64.deb"
+dpkg -i wsjtx_1.8.0_amd64.deb
 
 #################################
 cd ~
@@ -465,58 +416,19 @@ mkdir /usr/local/sbin/cjdns
 
 #move certain files into the new system
 cp ~/files/apt/10periodic /etc/apt/apt.conf.d/10periodic
-cp ~/files/rhythmbox/iradio-initial.xspf /usr/share/rhythmbox/plugins/iradio/iradio-initial.xspf
 cp ~/files/alsa/asound.state /var/lib/alsa/asound.state
 cp ~/files/pulse/daemon.conf /etc/pulse/daemon.conf
 cp ~/files/pulse/default.pa /etc/pulse/default.pa
 cp ~/files/pulse/system.pa /etc/pulse/system.pa
 cp ~/files/networking/resolv.conf /run/resolvconf/resolv.conf
 cp ~/files/networking/resolvconf /etc/network/if-up.d/resolvconf
-cp ~/files/etc/asound.conf /etc/asound.conf
-cp ~/files/etc/issue /etc/issue
-cp ~/files/etc/issue.net /etc/issue.net
-cp ~/files/etc/legal /etc/legal
-cp ~/files/etc/lsb-release /etc/lsb-release
-cp ~/files/etc/os-release /etc/os-release
-cp ~/files/etc/rtl-sdr-blacklist.conf /etc/modprobe.d/rtl-sdr-blacklist.conf
-cp ~/files/gedit/org.gnome.gedit.gschema.xml /usr/share/glib-2.0/schemas/org.gnome.gedit.gschema.xml
-cp ~/files/scripts/cjdns-controller.sh /usr/local/sbin/cjdns-controller.sh
-cp ~/files/scripts/dump1090.sh /usr/local/sbin/dump1090.sh
-cp ~/files/scripts/redsea-controller.sh /usr/local/sbin/redsea-controller.sh
-cp ~/files/scripts/rtl-hpsdr-controller.sh /usr/local/sbin/rtl-hpsdr-controller.sh
-cp ~/files/scripts/rtlsdr-controller.sh /usr/local/sbin/rtlsdr-controller.sh
-cp ~/files/scripts/softrock-controller.sh /usr/local/sbin/softrock-controller.sh
-cp ~/files/scripts/sdrtrunk-controller.sh /usr/local/sbin/sdrtrunk-controller.sh
-cp ~/files/scripts/websdr-list.sh /usr/local/sbin/websdr-list.sh
-cp ~/files/cjdns/cjdns_peers_ipv4 /etc/skel/cjdns/cjdns_peers_ipv4
-cp ~/files/cjdns/cjdns_peers_ipv6 /etc/skel/cjdns/cjdns_peers_ipv6
-cp ~/files/cjdns/cjdns_peers_ipv4_link /usr/local/sbin/cjdns/cjdns_peers_ipv4
-cp ~/files/cjdns/cjdns_peers_ipv6_link /usr/local/sbin/cjdns/cjdns_peers_ipv6
-cp ~/files/apps/cjdns-controller.desktop /usr/share/applications/cjdns-controller.desktop
-cp ~/files/apps/bitmask.desktop /usr/share/applications/bitmask.desktop
-cp ~/files/apps/cubicsdr.desktop /usr/share/applications/cubicsdr.desktop
-cp ~/files/apps/cudasdr.desktop /usr/share/applications/cudasdr.desktop
-cp ~/files/apps/lantern.desktop /usr/share/applications/lantern.desktop
-cp ~/files/apps/nautilus-root.desktop /usr/share/applications/nautilus-root.desktop
-cp ~/files/apps/openwebrx.desktop /usr/share/applications/openwebrx.desktop
-cp ~/files/apps/openwebrx-dsamp.desktop /usr/share/applications/openwebrx-dsamp.desktop
-cp ~/files/apps/openwebrx-sdrplay.desktop /usr/share/applications/openwebrx-sdrplay.desktop
-cp ~/files/apps/openwebrx-soundcard.desktop /usr/share/applications/openwebrx-soundcard.desktop
-cp ~/files/apps/rtl-hpsdr-controller.desktop /usr/share/applications/rtl-hpsdr-controller.desktop
-cp ~/files/apps/rtlsdr-controller.desktop /usr/share/applications/rtl-hpsdr-controller.desktop
-cp ~/files/apps/skywavelinux.desktop /usr/share/applications/skywavelinux.desktop
-cp ~/files/apps/softrock-controller.desktop /usr/share/applications/softrock-controller.desktop
-cp ~/files/apps/ubiquity.desktop /usr/share/applications/ubiquity.desktop
-cp ~/files/apps/wsjtx.desktop /usr/share/applications/wsjtx.desktop
-cp ~/files/apps/wxtoimg.desktop /usr/share/applications/wxtoimg.desktop
-cp ~/files/icons/Cjdns_logo.png /usr/share/pixmaps/Cjdns_logo.png
-cp ~/files/icons/CQ.png /usr/share/pixmaps/CQ.png
-cp ~/files/icons/CudaSDR.png /usr/share/pixmaps/CudaSDR.png
-cp ~/files/icons/dump1090.png /usr/share/pixmaps/dump1090.png
-cp ~/files/icons/sdrtrunk.png /usr/share/pixmaps/sdrtrunk.png
-cp ~/files/icons/wsjtx_icon.png /usr/share/pixmaps/wsjtx_icon.png
-cp ~/files/icons/wxtoimg.png /usr/share/pixmaps/wxtoimg.png
-cp -ar ~/files/opt/html /opt/html
+cp ~/files/usr/lib/os-release /usr/lib/os-release
+cp -R ~/files/etc/ /etc
+cp -R ~/files/usr/local/share/html/ /usr/local/share/html
+cp -R ~/files/cjdns/ /etc/skel/cjdns
+cp -R ~/files/apps/ /usr/share/applications
+cp -R ~/files/icons/ /usr/share/pixmaps
+cp -ar ~/files/usr/local/sbin /usr/local/sbin
 cp -ar ~/files/openwebrx /usr/local/sbin/openwebrx
 cp -ar ~/files/etc/skel /etc/skel
 
@@ -528,20 +440,78 @@ mv /etc/init/tty4.conf /etc/init/tty4.disabled
 mv /etc/init/tty5.conf /etc/init/tty5.disabled
 mv /etc/init/tty6.conf /etc/init/tty6.disabled
 
+#cjdns
+echo "\n...CJDNS..."
+cd ~
+cp ~/files/scripts/cjdns.sh /etc/init.d/cjdns
+chmod +x /etc/init.d/cjdns
+/etc/init.d/cjdns install
+#set link for nodejs and cjdroute
+ln -s /usr/bin/nodejs /usr/bin/node
+ln -s /opt/cjdns/cjdroute /usr/bin/cjdroute
+ln -s /opt/cjdns/contrib/systemd/cjdns.service /etc/systemd/system/cjdns.service
+
+#lantern
+wget "https://s3.amazonaws.com/lantern/lantern-installer-beta-64-bit.deb"
+dpkg -i lantern-installer-beta-64-bit.deb
+
+#replace the .desktop file
+echo '[Desktop Entry]
+Type=Application
+Name=Lantern
+Exec=sh -c "lantern -addr 127.0.0.1:8118"
+Icon=lantern
+Comment=Censorship circumvention (proxy / vpn) application for unblocked web browsing.
+Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applications/lantern.desktop
+
+#get the Psiphon client, forked from the pyclient on bitbucket
+echo "\nnext, Psiphon (PyClient)"
+cd ~
+#git clone https://github.com/thispc/psiphon
+git clone https://github.com/gilcu3/psiphon
+cd /psiphon/openssh-5.9p1
+./configure
+make
+mv ssh ../ssh
+cd ../../
+cp psiphon /usr/local/sbin/psiphon
+
+#create the launcher file
+echo "\n creating the .desktop file..."
+echo '[Desktop Entry]
+Comment=Psiphon Circumvention (proxy / vpn) controller for unblocked internet.
+Exec=gnome-terminal -e '/usr/local/sbin/psiphon-controller.sh'
+Name=Psiphon Controller
+GenericName[en_US]=Psiphon censorship circumvention controller.
+Categories=Network;Internet;Networking;Privacy;psiphon;VPN;proxy;
+Icon=/usr/share/pixmaps/psiphon.png
+NoDisplay=false
+StartupNotify=false
+Terminal=0
+TerminalOptions=
+Type=Application
+GenericName[en_US.UTF-8]=Privacy, Cryptography, Circumvention Tools, Psiphon;' > /usr/share/applications/psiphon-controller.desktop
+
 #run volk_profile to optimise for certain sdr apps
 echo "\nRunning volk_profile to optimise certain SDR applications"
 volk_profile
 
-#blacklist the rtl28xxu kernel driver
+#blacklist certain kernel drivers
 echo "blacklist dvb_usb_rtl28xxu
 blacklist e4000
 blacklist rtl2832
+blacklist rtl2830
+blacklist rtl2838
 blacklist msi001
-blacklist msi2500" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+blacklist msi2500
+blacklist sdr_msi3101" > /etc/modprobe.d/rtl-sdr-blacklist.conf
 
 #set performance configuration in sysctl.conf
 echo "
 ############
+vm.swappiness = 10
+vm.dirty_ratio = 3
+vm.vfs_cache_pressure=50
 net.core.somaxconn = 1000
 net.core.netdev_max_backlog = 5000
 net.core.rmem_max = 16777216
@@ -552,11 +522,7 @@ net.ipv4.tcp_max_syn_backlog = 8096
 net.ipv4.tcp_slow_start_after_idle = 0
 net.ipv4.tcp_tw_reuse = 1
 net.ipv4.ip_local_port_range = 10240 65535
-net.ipv4.icmp_echo_ignore_all = 1
-# Set swappiness
-vm.swappiness=10
-# Improve cache management
-vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf
 
 #configure for realtime audio
 echo "@audio - rtprio 95
@@ -574,5 +540,8 @@ systemctl enable tmp.mount
 
 #remove development software
 apt-get purge unity-tweak-tool squashfs-tools genisoimage
+
+# ldconfig one last time 
+ldconfig
 
 echo "\nAll tasks finished!"
