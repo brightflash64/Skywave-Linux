@@ -1,4 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+
+# Copyright (c) 2018 by Philip Collier, radio AB9IL <webmaster@ab9il.net>
+# This is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version. There is NO warranty; not even for
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 Encoding=UTF-8
 
 stopcjdns(){
@@ -18,7 +26,7 @@ restartcjdns(){
 }
 
 updatecjdns(){
-/etc/init.d/cjdns update
+mate-terminal -e 'bash -c "/etc/init.d/cjdns update"'
 }
 
 copyfile(){
@@ -68,14 +76,36 @@ chmod 600 /etc/cjdroute.conf
 }
 
 status(){
-gnome-terminal -e 'bash -c "systemctl status cjdns -l; read line"'
+mate-terminal -e 'bash -c "systemctl status cjdns -l; read line"'
 }
 
 peerstats(){
-gnome-terminal -e 'bash -c "/opt/cjdns/tools/peerStats; read line"'
+mate-terminal -e 'bash -c "/opt/cjdns/tools/peerStats; read line"'
 }
 
-ans=$(zenity  --list --title="CJDNS/HYPERBORIA CONTROLLER" --height 440 --width 350 \
+getpeers(){
+freshpeer=$(zenity  --list --title="GET NEW CJDNS PEERS" --height 230 --width 360 \
+--text "Please select a region for your fresh peers.
+Data will download to your home folder.
+Manually copy and paste the data into the peers lists." --radiolist --column "Select" --column "Region" \
+FALSE "North America" \
+FALSE "Europe" \
+FALSE "Asia");
+
+	if [  "$freshpeer" = "North America" ]; then
+		mate-terminal -e 'bash -c "curl https://peers.fc00.io/1/location/na >> peers.txt"'
+
+	elif [  "$freshpeer" = "Europe" ]; then
+		mate-terminal -e 'bash -c "curl https://peers.fc00.io/1/location/eu >> peers.txt"'
+
+	elif [  "$freshpeer" = "Asia" ]; then
+		mate-terminal -e 'bash -c "curl https://peers.fc00.io/1/location/as >> peers.txt"'
+
+	fi
+chmod 666 peers.txt
+}
+
+ans=$(zenity  --list --title="CJDNS/HYPERBORIA CONTROLLER" --height 510 --width 360 \
 --text "Follow these steps to connect.
 Relaunch this app for each step:
      1) Create the config file.
@@ -89,7 +119,7 @@ FALSE "Set IPv6 Peers  (json formatted)" \
 FALSE "Restart CJDNS" \
 FALSE "Check CJDNS peerstats" FALSE "Check CJDNS status" \
 FALSE "Update CJDNS" FALSE "Use config file (~/cjdns/cjdroute.conf)" \
-FALSE "Start CJDNS" TRUE "Stop CJDNS" );
+FALSE "Get Fresh Peers" FALSE "Start CJDNS" TRUE "Stop CJDNS" );
 
 	if [  "$ans" = "Create new config file (/etc/cjdroute.conf)" ]; then
 		createconf
@@ -114,6 +144,9 @@ FALSE "Start CJDNS" TRUE "Stop CJDNS" );
 
 	elif [  "$ans" = "Use config file (~/cjdns/cjdroute.conf)" ]; then
 		copyfile
+
+	elif [  "$ans" = "Get Fresh Peers" ]; then
+		getpeers
 
 	elif [  "$ans" = "Start CJDNS" ]; then
 		startcjdns
