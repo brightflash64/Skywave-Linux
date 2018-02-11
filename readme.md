@@ -1,10 +1,10 @@
-#**Skywave Linux Setup Script v0.1**  
+#**Skywave Linux Setup Scripts**  
 
 
-This script is written for Debian / Ubuntu / Mint Linux and automates the setup of Skywave Linux.  It will download software, create directories, configure settings, and copy files specific to this distro.
+Thes scripts are written for Debian / Ubuntu / Mint Linux and automate the setup and maintenance of Skywave Linux.  They will download software, create directories, configure settings, and copy files specific to this distro.
 
 Usage:
->Download the script and files to the home folder.  
->Run this script as root.  
+>Download the scripts and files to the home folder.  
+>Run the intended script as root.  
 
-For more about Skywave Linux, visit http://skywavelinux.com
+For more about Skywave Linux, visit https://skywavelinux.com
