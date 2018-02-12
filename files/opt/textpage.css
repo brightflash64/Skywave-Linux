@@ -1,6 +1,6 @@
 body {
    color: #DDDDDD;
-   background-color: #000000;
+   background-color: #070714;
    font-size: 15px;
    font-weight: 500;
    font-family: Arial, Helvetica, Courier, Verdana, Times New Roman;
@@ -23,14 +23,14 @@ body {
     div.buttonbar {height: 15px; padding-top: 3px;}
     div.button {float: left; padding-left 5px; padding-right: 5px;}
     div.clear {height:0;line-height:0px;font-size:0;clear:both;}
-    div.column4 {float: left; width: 160px; height: 250px; padding-left:8px}
-    div.content {width: 1024px; background-color: #070714; margin-left: auto; margin-right: auto;}
+    div.column {float: left; width: 430px; height: 400px; padding-left:13px}
+    div.content {width: 1024px; margin-left: auto; margin-right: auto;}
     div.header {width: 900px; font-size: 15px;}
     div.hugefont {font-weight:bold; font-size: 40px;}
     div.inner {width:900px; font-size: 15px;}
     div.intro {font-size: 15px; width: 900px;}
-    div.list0 {height: 275px; width: 900px;  font-size: 13px}
-    div.list1 {height:150px;width:710px;font-size:15px;font-weight:bold;}
+    div.list0 {height: 250px; width: 900px;  font-size: 15px}
+    div.list1 {height:250px;width:710px;font-size:15px;font-weight:bold;}
     div.listitem {float:left;width:150px;padding:4px;font-size:15px;font-weight:bold;}
     div.player {width:165px; margin-left: auto; margin-right: auto;}
     div.rightside {width:336px; top: 2px; left: 685px; position:fixed;}
