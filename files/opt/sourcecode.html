@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <title>Skywave Linux Source Code</title>
+    <meta name="Author" content="Philip Collier, AB9IL">
+    <meta name="Description" content="Skywave Linux Source Code">
+    <meta name="GENERATOR" content="Gedit">
+    <meta name="Language" content="English">  
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8"> 
+    <link rel="stylesheet" type="text/css" href="textpage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  </head>
+<body>
+<div class="content">
+<div class="outer">
+<div class="inner">
+<h1>Skywave Linux Source Code</h1>
+
+<p>Skywave Linux uses open source software, licensed under the GPL, and has a responsibility
+to make the underlying source code available to users.  As a user of these software
+packages, you have the right to obtain, study, and modify, and share the source code.  Listed below
+are links to the source used for creating Skywave Linux:</p>
+
+<a href="https://github.com/AB9IL/acarsdec" target="_blank">ACARSDEC</a><br>
+<a href="https://github.com/leapcode/bitmask_client/releases" target="_blank">Bitmask</a><br>
+<a href="http://chirp.danplanet.com/projects/chirp/repository/" target="_blank">CHIRP</a><br>
+<a href="https://github.com/cjcliffe/CubicSDR" target="_blank">CubicSDR</a><br>
+<a href="https://github.com/n1gp/cudaSDR" target="_blank">cudaSDR</a><br>
+<a href="https://github.com/MalcolmRobb/dump1090" target="_blank">dump1090 (MalcomRobb)</a><br>
+<a href="https://github.com/SDRplay/dump1090" target="_blank">dump1090 (SDRPlay)</a><br>
+<a href="https://github.com/szpajder/dumpvdl2" target="_blank">DumpVDL2</a><br>
+<a href="https://archive.mozilla.org/pub/firefox/releases/" target="_blank">Firefox</a><br>
+<a href="https://github.com/csete/gr-osmosdr-gqrx" target="_blank">Gr-Osmosdr-Gqrx</a><br>
+<a href="https://github.com/getlantern/lantern/releases" target="_blank">Lantern</a><br>
+<a href="https://github.com/airspy/host/tree/master/libairspy" target="_blank">libairspy</a><br>
+<a href="https://github.com/f4exb/libmirisdr-4" target="_blank">libmirisdr-4</a><br>
+<a href="https://github.com/AB9IL/rtl-sdr" target="_blank">rtl-sdr (AB9IL)</a><br>
+<a href="https://github.com/n1gp/librtlsdr" target="_blank">librtlsdr (N1GP)</a><br>
+<a href="https://github.com/keenerd/rtl-sdr" target="_blank">librtlsdr (Keenerd)</a><br>
+<a href="https://github.com/jgaeddert/liquid-dsp" target="_blank">Liquid DSP</a><br>
+<a href="https://github.com/simonyiszk/openwebrx" target="_blank">OpenWebRX</a><br>
+<a href="https://github.com/thispc/psiphon" target="_blank">Psiphon</a><br>
+<a href="http://git.osmocom.org/rtl-sdr/" target="_blank">Osmocom RTL-SDR</a><br>
+<a href="https://github.com/szpajder/RTLSDR-Airband" target="_blank">RTLSDR-Airband</a><br>
+<a href="https://github.com/AB9IL/ghpsdr3-alex" target="_blank">QtRadio</a><br>
+<a href="https://github.com/windytan/redsea" target="_blank">Redsea</a><br>
+<a href="https://github.com/rxseger/rx_tools" target="_blank">Rx_tools</a><br>
+<a href="https://github.com/DSheirer/sdrtrunk" target="_blank">SDRTrunk</a><br>
+<a href="https://github.com/pothosware/SoapyAudio" target="_blank">SoapyAudio</a><br>
+<a href="https://github.com/pothosware/SoapyOsmo" target="_blank">SoapyOsmo</a><br>
+<a href="https://github.com/pothosware/SoapyRTLSDR" target="_blank">SoapyRTLSDR</a><br>
+<a href="https://github.com/pothosware/SoapySDR" target="_blank">SoapySDR</a><br>
+<a href="https://github.com/pothosware/SoapySDRPlay" target="_blank">SoapySDRPlay</a><br>
+<a href="https://github.com/krippendorf/SDRPlayPorts" target="_blank">SDRPlayPorts</a><br>
+<a href="https://sourceforge.net/p/wsjt/wsjt/HEAD/tree/tags/wsjtx-1.6.0/" target="_blank">WSJT-X</a><br>
+<a href="https://sourceforge.net/p/wsjt/wsjt/HEAD/tree/branches/wsprx/" target="_blank">WSPR-X</a><br>
+<br>
+
+<p>The vast majority of binary files in Skywave Linux come from Ubuntu repositories.
+Downloading the source code for any or all of the packages from the repositories is quite easy.  As
+a prerequisite, make sure that the source code repositories are enabled for the sources in
+<i>/etc/apt/sources.list</i> and also the special repositories listed in the folder
+<i>/etc/apt/sources.list.d</i>.  For every "deb" line, there must be a corresponding uncommented
+"deb-src" line:</p>
+
+<pre class="c18">
+deb http://archive.ubuntu.com/ubuntu/ xenial main
+deb-src http://archive.ubuntu.com/ubuntu/ xenial main
+</pre>
+
+<p>You can retrieve the source code for any particular package with the following command, executed as a
+normal user:</p>
+
+<pre class="c18">
+apt-get source package-name
+</pre>
+
+<p>To get source for all of the packages downloaded from the repositories, you could repeat the above
+command thousands of times.  Instead, use a simple script to get the sources.  The code is given below,
+or you can <a href="https://skywavelinux.com/docs/getsource.sh" target="_blank">download getsource.sh here</a>.</p>
+
+<pre class="c18">
+#!/bin/bash
+# Download source from repositories
+# enabled on this system.
+
+echo "To get source for installed applications, press [ENTER] to execute..."
+read line
+
+mkdir source
+cd source
+dpkg --get-selections | while read line
+do
+        package=`echo $line | awk '{print $1}'`
+        mkdir $package
+        cd $package
+        apt-get -q source $package
+        cd ..
+done
+</pre>
+
+<p>Make the script executable:</p>
+
+<pre class="c18">
+chmod a+x getsource.sh
+</pre>
+
+<p>Give the command to execute the script:</p>
+
+<pre class="c18">
+./getsource.sh
+</pre>
+
+<p>The script will make a <i>source</i> directory and download the source code into it.
+On a low bandwidth connection, it could take a while to complete its tasks.</p>
+
+<p>Skywave Linux uses scripts and modified configuration files for integrating operation of
+the various software packages, increasing user convenience, and enhancing system performance.
+To access the specific Skywave Linux sources, visit 
+<a href="https://github.com/brightflash64/Skywave-Linux" target="_blank">Skywave Linux on Github</a>.</p>
+
+<br>
+<br>
+<br>
+
+</div>
+</div>
+</div>
+</body>
+</html>
