@@ -1,12 +1,13 @@
 #! /bin/sh
 
-# sdr-updater for Skywave Linux, version 0.9
+# sdr-updater for Skywave Linux, version 1.0
 # Copyright (c) 2017 by Philip Collier, radio AB9IL <webmaster@ab9il.net>
 # SDR Updater is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version. There is NO warranty; not even for
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 Encoding=UTF-8
 
 aptupgrade(){
@@ -56,58 +57,63 @@ rm -rf SDRPlayPorts
 getrtlsdr(){
 #install rtl-sdr drivers
 echo "\n\n...rtl-sdr firmware..."
-cd ~
+echo "\n\n...rtl-sdr firmware is now updated from the repositories."
+#cd ~
 #git clone https://git.osmocom.org/rtl-sdr
 #git clone https://github.com/steve-m/librtlsdr
 #git clone https://github.com/mutability/rtl-sdr
 #git clone https://github.com/thaolia/librtlsdr-thaolia
 #mv librtlsdr-thaolia rtl-sdr
-git clone https://github.com/AB9IL/rtl-sdr
-mkdir rtl-sdr/build
-cd rtl-sdr/build
-cmake ../ -DINSTALL_UDEV_RULES=ON
-make
-make install
-ldconfig
+#git clone https://github.com/AB9IL/rtl-sdr
+#mkdir rtl-sdr/build
+#cd rtl-sdr/build
+#cmake ../ -DINSTALL_UDEV_RULES=ON
+#make
+#make install
+#ldconfig
+#rm -rf rtl-sdr
 }
 
 getsoapy(){
 #get the SoapyAudio support module
 echo "\n\n...soapy audio"
-cd ~
-git clone https://github.com/pothosware/SoapyAudio
-mkdir SoapyAudio/build
-cd SoapyAudio/build
-cmake ..
-make
-make install
-ldconfig
-cd ~
-rm -rf SoapyAudio
+echo "\n\n...Soapy SDR drivers are now updated from the repositories."
+#cd ~
+#git clone https://github.com/pothosware/SoapyAudio
+#mkdir SoapyAudio/build
+#cd SoapyAudio/build
+#cmake ..
+#make
+#make install
+#ldconfig
+#cd ~
+#rm -rf SoapyAudio
 
 #get SoapyPlutoSDR support module
 echo "\n\n...SoapyPlutoSDR"
-cd ~
-git clone https://github.com/jocover/SoapyPlutoSDR
-mkdir SoapyPlutoSDR/build
-cd SoapyPlutoSDR/build
-cmake ..
-make
-sudo make install
-ldconfig
+echo "\n\n...Soapy SDR drivers are now updated from the repositories."
+#cd ~
+#git clone https://github.com/jocover/SoapyPlutoSDR
+#mkdir SoapyPlutoSDR/build
+#cd SoapyPlutoSDR/build
+#cmake ..
+#make
+#sudo make install
+#ldconfig
 
 #get the SoapySDRPlay support module for CubicSDR
 echo "\n\n...SoapySDRPlay..."
-cd ~
-git clone https://github.com/pothosware/SoapySDRPlay
-mkdir SoapySDRPlay/build
-cd SoapySDRPlay/build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make install
-ldconfig
-cd ~
-rm -rf SoapySDRPlay
+echo "\n\n...Soapy SDR drivers are now updated from the repositories."
+#cd ~
+#git clone https://github.com/pothosware/SoapySDRPlay
+#mkdir SoapySDRPlay/build
+#cd SoapySDRPlay/build
+#cmake .. -DCMAKE_BUILD_TYPE=Release
+#make
+#make install
+#ldconfig
+#cd ~
+#rm -rf SoapySDRPlay
 }
 
 getqtradio(){
@@ -159,13 +165,26 @@ cp -ar ~/openwebrx /usr/local/sbin/openwebrx
 
 getcubicsdr(){
 #install CubicSDR and dependencies
+echo "\n\n...CubicSDR AppImage..."
 cd ~
-wget "https://github.com/cjcliffe/CubicSDR/releases/download/0.2.3/CubicSDR-0.2.3-x86_64.AppImage"
-chmod +x CubicSDR-0.2.3-x86_64.AppImage
-mv ~/CubicSDR-0.2.3-x86_64.AppImage /usr/local/sbin/CubicSDR/CubicSDR.AppImage
+wget "https://github.com/cjcliffe/CubicSDR/releases/download/0.2.4/CubicSDR-0.2.4-x86_64.AppImage"
+chmod +x CubicSDR-0.2.4-x86_64.AppImage
+mv ~/CubicSDR-0.2.4-x86_64.AppImage /usr/local/sbin/CubicSDR/CubicSDR.AppImage
+
+#remake the launcher
+echo '[Desktop Entry]
+Name=CubicSDR
+GenericName=CubicSDR
+Comment=RTL-SDR - Software Defined Radio
+Exec=/usr/local/sbin/CubicSDR/CubicSDR.AppImage
+Icon=/usr/share/pixmaps/CubicSDR.ico
+Terminal=false
+Type=Application
+Categories=HamRadio;' > /usr/local/share/applications/cubicsdr.desktop
 }
 
 getremotesdrclient(){
+echo "\n\n...RemoteSdrClient-NS..."
 #get RemoteSdrClient-NS (for RFSpace hardware)
 cd ~
 git clone https://github.com/csete/remotesdrclient-ns
@@ -175,7 +194,7 @@ make
 cp ~/remotesdrclient-ns/remotesdrclient-ns /usr/local/bin/remotesdrclient-ns
 #manually copy the icon to /usr/share/pixmaps
 cp ~/remotesdrclient-ns/RemoteSdrClient.png /usr/share/pixmaps/RemoteSdrClient.png
-#create menu entry via .desktop file
+#create the launcher
 echo '[Desktop Entry]
 Name=RemoteSdrClient
 GenericName=RemoteSdrClient
@@ -187,8 +206,36 @@ Type=Application
 Categories=Network;HamRadio;' > /usr/share/applications/remotesdrclient.desktop
 }
 
+getgqrx(){
+echo "\n\n...Gqrx AppImage..."
+#install Gqrx and dependencies
+cd ~
+wget "https://github.com/csete/gqrx/releases/download/v2.11.2/Gqrx-2.11.2-x86_64.AppImage"
+chmod +x Gqrx-2.11.2-x86_64.AppImage
+mv ~/Gqrx-2.11.2-x86_64.AppImage /usr/local/sbin/gqrx/gqrx.AppImage
+
+#create the launcher
+echo '[Desktop Entry]
+Type=Application
+Name=Gqrx
+GenericName=Software Defined Radio
+Comment=Software defined radio receiver implemented using GNU Radio and the Qt GUI toolkit
+# FIXME add comments in other languages
+GenericName[ru]=Программно-определённое радио
+Comment[ru]=Приемник для программно-определенного радио (SDR) использующий GNU Radio и библиотеку Qt.
+GenericName[nl]=Software Defined Radio
+Comment[nl]=Software defined radio ontvanger geïmplementeerd met GNU Radio en de Qt GUI toolkit
+Comment[de]=Software defined Radio auf Basis von GNU Radio und dem Qt GUI Toolkit
+Exec=/usr/local/sbin/gqrx/gqrx.AppImage
+Terminal=false
+Icon=gqrx.png
+Categories=Network;HamRadio;
+Keywords=SDR;Radio;HAM;' > /usr/share/applications/gqrx.desktop
+}
+
 rtlsdrairband(){
 #get rtlsdr-airband
+cd ~
 git clone https://github.com/szpajder/RTLSDR-Airband
 cd RTLSDR-Airband
 PLATFORM=x86 NFM=1 make
@@ -202,13 +249,18 @@ autoreconf
 ./configure
 make
 make acarsserv
-
+cp acarsdec /usr/local/sbin/acarsdec
+cp acarsserv /usr/local/sbin/acarsdec
 cd ~
+
 #get dumpvdl2
 git clone https://github.com/szpajder/dumpvdl2
 cd dumpvdl2
 make
 cp ~/dumpvdl2/dumpvdl2 /usr/local/bin/dumpvdl2
+cd ~
+rm -rf acarsdec
+rm -rf dumpvdl2
 }
 
 getdump1090(){
@@ -249,14 +301,6 @@ wget "https://github.com/DSheirer/sdrtrunk/releases/download/v0.3.3-beta.3/sdr-t
 mv sdr-trunk-all-0.3.3-beta.3.jar /usr/local/sbin/sdrtrunk.jar
 }
 
-getwsjtx(){
-#get WSJT-X
-echo "\n\n...WSJT-X..."
-cd ~
-wget "http://physics.princeton.edu/pulsar/k1jt/wsjtx_1.8.0_amd64.deb"
-dpkg -i wsjtx_1.8.0_amd64.deb
-}
-
 getrtaudio(){
 #get rtaudio
 echo "\n\n...rtaudio"
@@ -277,10 +321,11 @@ rm -rf rtaudio
 getcrypto(){
 #lantern
 echo "\n\n...getting Lantern..."
+cd ~
 wget "https://s3.amazonaws.com/lantern/lantern-installer-beta-64-bit.deb"
 dpkg -i lantern-installer-beta-64-bit.deb
 
-#replace the .desktop file
+#replace the launcher
 echo '[Desktop Entry]
 Type=Application
 Name=Lantern
@@ -288,8 +333,6 @@ Exec=sh -c "lantern -addr 127.0.0.1:8118"
 Icon=lantern
 Comment=Censorship circumvention (proxy / vpn) application for unblocked web browsing.
 Categories=Network;Internet;Networking;Privacy;Proxy;VPN;' > /usr/share/applications/lantern.desktop
-
-echo "\n\n...cleaning up a bit..."
 
 #update cjdns
 echo "\n\n...updating cjdns..."
@@ -314,11 +357,11 @@ rm ssh
 cp openssh-portable/ssh .
 }
 
-ans=$(zenity  --list --height 270 --width 420 --text "SDR Software Updater" --radiolist  --column "Pick" --column "Action" \
-TRUE "Upgrade Base System and Drivers with Apt" FALSE "Update QtRadio" FALSE "Update CubicSDR" FALSE "Update RemoteSdrClient" \
-FALSE "Update OpenwebRX" FALSE "Update R820tweak" FALSE "Update SoapySDR Drivers" FALSE "Update Dump1090" \
-FALSE "Update SDRPlay Drivers" FALSE "Update RTL-SDR"  FALSE "Update RTLSDR-Airband" FALSE "Update SDRTrunk" \
-FALSE "Update WSJT-X" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Crypto");
+ans=$(zenity  --list --height 470 --width 420 --text "SDR Software Updater" --radiolist  --column "Pick" --column "Action" \
+TRUE "Upgrade Base System and Drivers with Apt" FALSE "Update QtRadio" FALSE "Update CubicSDR" FALSE "Update Gqrx" \
+FALSE "Update RemoteSdrClient" FALSE "Update OpenwebRX" FALSE "Update R820tweak" FALSE "Update SoapySDR Drivers" \
+FALSE "Update Dump1090" FALSE "Update SDRPlay Drivers" FALSE "Update RTL-SDR"  FALSE "Update RTLSDR-Airband" \
+FALSE "Update SDRTrunk" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Crypto");
 
 	if [  "$ans" = "Upgrade Base System and Drivers with Apt" ]; then
 		aptupgrade
@@ -328,6 +371,9 @@ FALSE "Update WSJT-X" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Cry
 
 	elif [  "$ans" = "Update CubicSDR" ]; then
 		getcubicsdr
+
+	elif [  "$ans" = "Update Gqrx" ]; then
+		getgqrx
 
 	elif [  "$ans" = "Update RemoteSdrClient" ]; then
 		getremotesdrclient
@@ -356,9 +402,6 @@ FALSE "Update WSJT-X" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Cry
 	elif [  "$ans" = "Update SDRTrunk" ]; then
 		getsdrtrunk
 
-	elif [  "$ans" = "Update WSJT-X" ]; then
-		getwsjtx
-
 	elif [  "$ans" = "Update Rtaudio" ]; then
 		getrtaudio
 
@@ -368,3 +411,4 @@ FALSE "Update WSJT-X" FALSE "Update Rtaudio" FALSE "Update Mesh Networking & Cry
 	fi
 
 echo "\n\nScript Execution Completed!"
+read -p "\n\nPress any key to continue..." 
